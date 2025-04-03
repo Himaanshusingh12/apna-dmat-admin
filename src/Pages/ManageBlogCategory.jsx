@@ -18,7 +18,7 @@ function ManageBlogCategory() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const limit = 5;
+  const limit = 10;
 
   useEffect(() => {
     fetchBlogcategory();
@@ -32,7 +32,7 @@ function ManageBlogCategory() {
       if (response.status === 200) {
         Setblog(response.data.data);
         setTotalPages(response.data.pagination.totalPages);
-        console.log("The Fetched Blog categories are:", response.data);
+        // console.log("The Fetched Blog categories are:", response.data);
       }
     } catch (error) {
       console.error(
@@ -71,7 +71,7 @@ function ManageBlogCategory() {
         Setblog(response.data.data);
       }
     } catch (error) {
-      console.error("Error searching blog category:", error);
+      // console.error("Error searching blog category:", error);
       toast.error("Error searching blog category");
     }
   };

@@ -24,14 +24,24 @@ function SidePanel() {
             </div>
           </div>
           <div className="navbar-nav w-100">
-            <NavLink to="/" className="nav-item nav-link">
+            <NavLink to="/dashboard" className="nav-item nav-link">
               <i className="fa fa-tachometer-alt me-2" />
               Dashboard
+            </NavLink>
+
+            <NavLink to="/popup-details" className="nav-item nav-link">
+              <i className="fa fa-user me-2" />
+              Popup Details
             </NavLink>
 
             <NavLink to="/users" className="nav-item nav-link">
               <i className="fa fa-user me-2" />
               Users
+            </NavLink>
+
+            <NavLink to="/account-setting" className="nav-item nav-link">
+              <i className="fa fa-cog me-2" />
+              Account Setting
             </NavLink>
             <div className="nav-item dropdown">
               <a
@@ -111,14 +121,32 @@ function SidePanel() {
                 className="nav-link dropdown-toggle"
                 data-bs-toggle="dropdown"
               >
+                <i className="fa fa-blog me-2" />
+                Blog Details
+              </a>
+              <div className="dropdown-menu bg-transparent border-0">
+                <NavLink to="/add-blogdetails" className="dropdown-item">
+                  Add Blog Details
+                </NavLink>
+                <NavLink to="/manage-blogdetails" className="dropdown-item">
+                  Manage Blog Details
+                </NavLink>
+              </div>
+            </div>
+            <div className="nav-item dropdown">
+              <a
+                href="#"
+                className="nav-link dropdown-toggle"
+                data-bs-toggle="dropdown"
+              >
                 <i className="fa fa-sliders-h me-2" />
                 Slider
               </a>
               <div className="dropdown-menu bg-transparent border-0">
-                <NavLink to="" className="dropdown-item">
+                <NavLink to="/add-slider" className="dropdown-item">
                   Add Slider
                 </NavLink>
-                <NavLink to="" className="dropdown-item">
+                <NavLink to="/manage-slider" className="dropdown-item">
                   Manage Slider
                 </NavLink>
               </div>
@@ -141,7 +169,7 @@ function SidePanel() {
                 </NavLink>
               </div>
             </div>
-            <div className="nav-item dropdown">
+            {/* <div className="nav-item dropdown">
               <a
                 href="#"
                 className="nav-link dropdown-toggle"
@@ -158,14 +186,14 @@ function SidePanel() {
                   Manage Setting
                 </NavLink>
               </div>
-            </div>
+            </div> */}
             <div className="nav-item dropdown">
               <a
                 href="#"
                 className="nav-link dropdown-toggle"
                 data-bs-toggle="dropdown"
               >
-                <i className="fa fa-tools me-2" />
+                <i className="fa fa-file-contract me-2" />
                 Terms & Condition
               </a>
               <div className="dropdown-menu bg-transparent border-0">
@@ -183,7 +211,8 @@ function SidePanel() {
                 className="nav-link dropdown-toggle"
                 data-bs-toggle="dropdown"
               >
-                <i className="fa fa-tools me-2" />
+                {/* <i className="fa fa-user-shield me-2" /> */}
+                <i className="fa fa-shield-alt me-2" />
                 Privacy & Policy
               </a>
               <div className="dropdown-menu bg-transparent border-0">

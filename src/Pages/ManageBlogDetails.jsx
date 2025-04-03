@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
+import Footer from "../Component/Footer";
 import SidePanel from "../Component/SidePanel";
 import Header from "../Component/Header";
-import Footer from "../Component/Footer";
-import { toast } from "react-toastify";
 import axios from "axios";
 import { BACKEND_URL } from "../Constant";
+import { toast } from "react-toastify";
 
-function ManageServiceDetails() {
+function ManageBlogDetails() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const [servicedetail, Setservicedetail] = useState([]);
+  const [blogdetail, Setblogdetail] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -22,29 +22,26 @@ function ManageServiceDetails() {
   const limit = 10;
 
   useEffect(() => {
-    fetchserviceDetail();
+    fetchBlogdetail();
   }, [currentPage]);
 
-  const fetchserviceDetail = async () => {
+  const fetchBlogdetail = async () => {
     try {
-      const response = await axios.get(
-        `${BACKEND_URL}/api/service-detail/get`,
-        {
-          params: { page: currentPage, limit: limit },
-        }
-      );
+      const response = await axios.get(`${BACKEND_URL}/api/blog-detail/get`, {
+        params: { page: currentPage, limit: limit },
+      });
       if (response.status === 200) {
-        Setservicedetail(response.data.data);
+        Setblogdetail(response.data.data);
         setTotalPages(response.data.pagination.totalPages);
-        console.log("The Fetched Service detail:", response.data);
+        console.log("The Fetched blog details are:", response.data);
       }
     } catch (error) {
       console.error(
-        "Error fetching service detail:",
+        "Error fetching blog detail:",
         error.response?.data || error.message
       );
       toast.error(
-        `Error fetching service detail: ${
+        `Error fetching  service detail: ${
           error.response?.data?.message || error.message
         }`
       );
@@ -56,47 +53,27 @@ function ManageServiceDetails() {
     setCurrentPage(newPage);
   };
 
-  // search sub service
-  const searchserviceDetail = async (query) => {
-    if (!query.trim()) {
-      fetchserviceDetail();
-      return;
-    }
-
+  // delete blog details
+  const handleDelete = async (id) => {
     try {
-      const response = await axios.get(
-        `${BACKEND_URL}/api/service-detail/search`,
-        {
-          params: { query: query },
-        }
+      const response = await axios.delete(
+        `${BACKEND_URL}/api/blog-detail/delete/${id}`
       );
-
       if (response.status === 200) {
-        Setservicedetail(response.data.data);
+        toast.success("Blog detail deleted successfully!");
+        fetchBlogdetail();
       }
     } catch (error) {
-      console.error("Error searching service:", error);
-      toast.error("Error searching service");
+      toast.error(error.response?.data?.message || error.message);
     }
   };
 
-  // Handle Search Input Change
-  const handleSearch = (e) => {
-    const query = e.target.value;
-    setSearchQuery(query);
-
-    if (query.trim() === "") {
-      fetchserviceDetail();
-    } else {
-      searchserviceDetail(query);
-    }
-  };
   // Toggle Active/Inactive status
   const toggleStatus = async (id) => {
     try {
-      await axios.put(`${BACKEND_URL}/api/service-detail/status/${id}`);
-      toast.success("Service detail status updated successfully!");
-      fetchserviceDetail();
+      await axios.put(`${BACKEND_URL}/api/blog-detail/status/${id}`);
+      toast.success("Blog detail status updated successfully!");
+      fetchBlogdetail();
     } catch (error) {
       console.error(
         "Error updating status:",
@@ -110,18 +87,39 @@ function ManageServiceDetails() {
     }
   };
 
-  // Delete Service Detail
-  const handleDelete = async (id) => {
+  // search sub service
+  const searchBlogdetail = async (query) => {
+    if (!query.trim()) {
+      fetchBlogdetail();
+      return;
+    }
+
     try {
-      const response = await axios.delete(
-        `${BACKEND_URL}/api/service-detail/delete/${id}`
+      const response = await axios.get(
+        `${BACKEND_URL}/api/blog-detail/search`,
+        {
+          params: { query: query },
+        }
       );
+
       if (response.status === 200) {
-        toast.success("Service detail deleted successfully!");
-        fetchserviceDetail();
+        Setblogdetail(response.data.data);
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || error.message);
+      console.error("Error searching blog detail:", error);
+      toast.error("Error searching blog detail");
+    }
+  };
+
+  // Handle Search Input Change
+  const handleSearch = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+
+    if (query.trim() === "") {
+      fetchBlogdetail();
+    } else {
+      searchBlogdetail(query);
     }
   };
 
@@ -131,34 +129,36 @@ function ManageServiceDetails() {
   };
 
   // Handle Service Update with Image Upload
-  const handleUpdatesubService = async () => {
+  const handleUpdateBlog = async () => {
     if (!selecteddetail) return;
     // console.log("Selected Detail:", selecteddetail);
     try {
       const formData = new FormData();
-      formData.append("sort_description", selecteddetail.sort_description);
+      formData.append("title", selecteddetail.title);
       formData.append("description", selecteddetail.description);
+      formData.append("meta_title", selecteddetail.meta_title);
+      formData.append("meta_description", selecteddetail.meta_description);
+      formData.append("meta_keywords", selecteddetail.meta_keywords);
       if (imageFile) {
         // console.log("Image File:", imageFile);
         formData.append("image", imageFile);
       }
       await axios.put(
-        `${BACKEND_URL}/api/service-detail/edit/${selecteddetail.servicedetails_id}`,
+        `${BACKEND_URL}/api/blog-detail/edit/${selecteddetail.blogdetail_id}`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
-      toast.success("Service detail updated successfully!");
-      fetchserviceDetail();
+      toast.success("Blog detail updated successfully!");
+      fetchBlogdetail();
       setSelectedDetail(null);
       setImageFile(null);
     } catch (error) {
       // console.error("Update Error:", error);
-      toast.error("Error updating service detail");
+      toast.error("Error updating blog detail");
     }
   };
-
   return (
     <>
       <div className="container-fluid position-relative bg-white d-flex p-0">
@@ -168,7 +168,7 @@ function ManageServiceDetails() {
           <div className="col-12 mt-2">
             <div className="bg-white shadow rounded h-100 p-4 border">
               <div className="d-flex justify-content-between align-items-center mb-3">
-                <h5 className="fw-bold text-primary">Manage Service Detail</h5>
+                <h5 className="fw-bold text-primary">Manage Blog Detail</h5>
                 <input
                   type="text"
                   className="form-control w-25 border-primary shadow-sm"
@@ -184,31 +184,31 @@ function ManageServiceDetails() {
                       <th scope="col" className="text-center">
                         S. No.
                       </th>
-                      <th>Sub Service</th>
+                      <th>Blog Category</th>
                       <th scope="col">image</th>
-                      <th scope="col">Sort Description</th>
-                      {/* <th scope="col" className="w-100">
-                        Description
-                      </th> */}
+                      <th scope="col">Title</th>
                       <th scope="col">Description</th>
+                      <th scope="col">Meta title</th>
+                      <th scope="col">Meta Description</th>
+                      <th scope="col">Meta Keywords</th>
                       <th scope="col">Status</th>
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {servicedetail.length > 0 ? (
-                      servicedetail.map((servicedetail, index) => (
+                    {blogdetail.length > 0 ? (
+                      blogdetail.map((blogdetail, index) => (
                         <tr
-                          key={servicedetail.servicedetail_id}
+                          key={blogdetail.blogdetail_id}
                           className="table-light"
                         >
                           <th className="text-center">{index + 1}</th>
                           <td className="border text-muted">
-                            {servicedetail.subservice_title}
+                            {blogdetail.blog_category}
                           </td>
                           <td className="border text-muted">
                             <img
-                              src={servicedetail.image}
+                              src={blogdetail.image}
                               alt="Blog"
                               style={{
                                 width: "100px",
@@ -217,21 +217,30 @@ function ManageServiceDetails() {
                               }}
                             />
                           </td>
-                          <td className="border fw-bold text-secondary">
-                            {servicedetail.sort_description}
+                          <td className="border text-muted">
+                            {blogdetail.title}
                           </td>
                           <td className="border text-muted">
-                            {servicedetail.description}
+                            {blogdetail.description}
+                          </td>
+                          <td className="border fw-bold text-secondary">
+                            {blogdetail.meta_title}
+                          </td>
+                          <td className="border text-muted">
+                            {blogdetail.meta_description}
+                          </td>
+                          <td className="border text-muted">
+                            {blogdetail.meta_keywords}
                           </td>
                           <td className="border text-center">
                             <span
                               className={`badge ${
-                                servicedetail.status === "Active"
+                                blogdetail.status === "Active"
                                   ? "bg-success"
                                   : "bg-danger"
                               } p-2`}
                             >
-                              {servicedetail.status}
+                              {blogdetail.status}
                             </span>
                           </td>
                           <td className="border text-center">
@@ -244,13 +253,13 @@ function ManageServiceDetails() {
                             >
                               <i
                                 className={`fa ${
-                                  servicedetail.status === "Active"
+                                  blogdetail.status === "Active"
                                     ? "fa-toggle-on text-success"
                                     : "fa-toggle-off text-danger"
                                 }`}
                                 style={{ fontSize: "26px", cursor: "pointer" }}
                                 onClick={() =>
-                                  toggleStatus(servicedetail.servicedetails_id)
+                                  toggleStatus(blogdetail.blogdetail_id)
                                 }
                               ></i>
                               <i
@@ -261,13 +270,13 @@ function ManageServiceDetails() {
                                 }}
                                 data-bs-toggle="modal"
                                 data-bs-target="#editServiceModal"
-                                onClick={() => setSelectedDetail(servicedetail)}
+                                onClick={() => setSelectedDetail(blogdetail)}
                               ></i>
                               <i
                                 className="fa fa-trash text-danger"
                                 style={{ fontSize: "24px", cursor: "pointer" }}
                                 onClick={() =>
-                                  handleDelete(servicedetail.servicedetails_id)
+                                  handleDelete(blogdetail.blogdetail_id)
                                 }
                               ></i>
                             </span>
@@ -280,7 +289,7 @@ function ManageServiceDetails() {
                           colSpan="6"
                           className="text-center text-danger fw-bold border"
                         >
-                          No Subservice Found!
+                          No Blog details Found!
                         </td>
                       </tr>
                     )}
@@ -295,7 +304,7 @@ function ManageServiceDetails() {
                     <div className="modal-dialog modal-dialog-centered">
                       <div className="modal-content">
                         <div className="modal-header bg-primary text-white">
-                          <h5 className="modal-title">Edit Sub Service</h5>
+                          <h5 className="modal-title">Edit Blog detail</h5>
                           <button
                             type="button"
                             className="btn-close"
@@ -316,24 +325,23 @@ function ManageServiceDetails() {
                             />
                           </div>
                           <div className="mb-3">
-                            <label className="form-label">
-                              Short Description
-                            </label>
+                            <label className="form-label">Title</label>
                             <input
                               type="text"
                               className="form-control"
-                              value={selecteddetail?.sort_description || ""}
+                              value={selecteddetail?.title || ""}
                               onChange={(e) =>
                                 setSelectedDetail({
                                   ...selecteddetail,
-                                  sort_description: e.target.value,
+                                  title: e.target.value,
                                 })
                               }
                             />
                           </div>
                           <div className="mb-3">
                             <label className="form-label">Description</label>
-                            <textarea
+                            <input
+                              type="text"
                               className="form-control"
                               value={selecteddetail?.description || ""}
                               onChange={(e) =>
@@ -342,7 +350,48 @@ function ManageServiceDetails() {
                                   description: e.target.value,
                                 })
                               }
-                            ></textarea>
+                            />
+                          </div>
+                          <div className="mb-3">
+                            <label className="form-label">Meta Title</label>
+                            <input
+                              className="form-control"
+                              value={selecteddetail?.meta_title || ""}
+                              onChange={(e) =>
+                                setSelectedDetail({
+                                  ...selecteddetail,
+                                  meta_title: e.target.value,
+                                })
+                              }
+                            />
+                          </div>
+                          <div className="mb-3">
+                            <label className="form-label">
+                              Meta Description
+                            </label>
+                            <input
+                              className="form-control"
+                              value={selecteddetail?.meta_description || ""}
+                              onChange={(e) =>
+                                setSelectedDetail({
+                                  ...selecteddetail,
+                                  meta_description: e.target.value,
+                                })
+                              }
+                            />
+                          </div>
+                          <div className="mb-3">
+                            <label className="form-label">Meta Keywords</label>
+                            <input
+                              className="form-control"
+                              value={selecteddetail?.meta_keywords || ""}
+                              onChange={(e) =>
+                                setSelectedDetail({
+                                  ...selecteddetail,
+                                  meta_keywords: e.target.value,
+                                })
+                              }
+                            />
                           </div>
                         </div>
                         <div className="modal-footer">
@@ -357,7 +406,7 @@ function ManageServiceDetails() {
                           <button
                             type="button"
                             className="btn btn-primary"
-                            onClick={handleUpdatesubService}
+                            onClick={handleUpdateBlog}
                             data-bs-dismiss="modal"
                           >
                             Update
@@ -396,4 +445,4 @@ function ManageServiceDetails() {
   );
 }
 
-export default ManageServiceDetails;
+export default ManageBlogDetails;

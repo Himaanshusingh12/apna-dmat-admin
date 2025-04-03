@@ -18,7 +18,7 @@ function Managetermscondition() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [selectedTerms, setSelectedTerms] = useState(null);
-  const limit = 3;
+  const limit = 10;
 
   useEffect(() => {
     fetchTermscondition();

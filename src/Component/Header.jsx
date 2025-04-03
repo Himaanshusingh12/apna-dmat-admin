@@ -1,7 +1,16 @@
 import React from "react";
 import "../Styles/Header.css";
+import { useNavigate } from "react-router-dom";
 
 function Header({ onToggleSidebar }) {
+  const handleLogout = () => {
+    // console.log("Logging out...");
+
+    localStorage.removeItem("adminToken");
+    // console.log("Token after logout:", localStorage.getItem("adminToken"));
+
+    window.location.href = "/";
+  };
   return (
     <>
       <nav className="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
@@ -18,66 +27,10 @@ function Header({ onToggleSidebar }) {
           <i className="fa fa-bars" />
         </a>
         <div className="navbar-nav align-items-center ms-auto">
-          <div className="nav-item dropdown">
-            <a
-              href="#"
-              className="nav-link dropdown-toggle"
-              data-bs-toggle="dropdown"
-            >
-              <i className="fa fa-envelope me-lg-2" />
-              <span className="d-none d-lg-inline-flex">Message</span>
-            </a>
-            <div className="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-              <a href="#" className="dropdown-item">
-                <div className="d-flex align-items-center">
-                  <img
-                    className="rounded-circle"
-                    src="img/user.jpg"
-                    alt
-                    style={{ width: 40, height: 40 }}
-                  />
-                  <div className="ms-2">
-                    <h6 className="fw-normal mb-0">Jhon send you a message</h6>
-                    <small>15 minutes ago</small>
-                  </div>
-                </div>
-              </a>
-              <hr className="dropdown-divider" />
-              <a href="#" className="dropdown-item">
-                <div className="d-flex align-items-center">
-                  <img
-                    className="rounded-circle"
-                    src="img/user.jpg"
-                    alt
-                    style={{ width: 40, height: 40 }}
-                  />
-                  <div className="ms-2">
-                    <h6 className="fw-normal mb-0">Jhon send you a message</h6>
-                    <small>15 minutes ago</small>
-                  </div>
-                </div>
-              </a>
-              <hr className="dropdown-divider" />
-              <a href="#" className="dropdown-item">
-                <div className="d-flex align-items-center">
-                  <img
-                    className="rounded-circle"
-                    src="img/user.jpg"
-                    alt
-                    style={{ width: 40, height: 40 }}
-                  />
-                  <div className="ms-2">
-                    <h6 className="fw-normal mb-0">Jhon send you a message</h6>
-                    <small>15 minutes ago</small>
-                  </div>
-                </div>
-              </a>
-              <hr className="dropdown-divider" />
-              <a href="#" className="dropdown-item text-center">
-                See all message
-              </a>
-            </div>
-          </div>
+          <button onClick={handleLogout} className="btn btn-primary me-3">
+            <i className="fa fa-sign-out-alt me-1"></i> Logout
+          </button>
+
           <div className="nav-item dropdown">
             <a
               href="#"

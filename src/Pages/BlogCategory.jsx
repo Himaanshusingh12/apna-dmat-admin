@@ -38,7 +38,7 @@ function BlogCategory() {
       });
     } catch (err) {
       toast.error("Error Adding Blog Category");
-      console.error(err);
+      // console.error(err);
     }
   };
 

@@ -3,6 +3,7 @@ import SidePanel from "../Component/SidePanel";
 import Header from "../Component/Header";
 import Footer from "../Component/Footer";
 import { toast } from "react-toastify";
+import JoditTextEditor from "../Component/JoditEditor";
 import axios from "axios";
 import { BACKEND_URL } from "../Constant";
 
@@ -16,6 +17,11 @@ function PrivacyPolicy() {
   const [formData, SetformData] = useState({
     content: "",
   });
+
+  // Handle Jodit Editor Change
+  const handleEditorChange = (newContent) => {
+    SetformData({ content: newContent });
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -49,20 +55,17 @@ function PrivacyPolicy() {
           <Header onToggleSidebar={toggleSidebar} />
           <div className="container-fluid pt-4 px-4">
             <div className="row g-4">
-              <div className="col-sm-12 col-xl-6">
+              <div className="col-sm-12 col-xl-12">
                 <div className="bg-light rounded h-100 p-4">
                   <h6 className="mb-4">Privacy & Policy</h6>
                   <form onSubmit={handleSubmit}>
                     <div className="form-floating mb-3">
-                      <textarea
-                        className="form-control"
-                        id="termsContent"
-                        value={formData.content}
-                        onChange={handleChange}
-                        name="content"
-                        placeholder="Enter Privacy & Policy"
-                      ></textarea>
-                      <label htmlFor="content">Privacy & Policy</label>
+                      <div className="mb-3">
+                        <JoditTextEditor
+                          value={formData.content}
+                          onChange={handleEditorChange}
+                        />
+                      </div>
                     </div>
                     <button type="submit" className="btn btn-primary">
                       Add Privacy & Policy

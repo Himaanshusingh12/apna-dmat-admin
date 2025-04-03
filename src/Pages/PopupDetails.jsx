@@ -6,66 +6,86 @@ import axios from "axios";
 import { BACKEND_URL } from "../Constant";
 import { toast } from "react-toastify";
 
-function Users() {
+function PopupDetails() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const [users, SetUser] = useState([]);
+  const [details, SetDetails] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const limit = 10;
 
   useEffect(() => {
-    fetchUsers();
+    fetchDetails();
   }, [currentPage]);
 
-  const fetchUsers = async () => {
+  const fetchDetails = async () => {
     try {
-      const response = await axios.get(`${BACKEND_URL}/api/users/get-users`, {
+      const response = await axios.get(`${BACKEND_URL}/api/popup-detail/get`, {
         params: { page: currentPage, limit: limit },
       });
       if (response.status === 200) {
-        SetUser(response.data.data);
+        SetDetails(response.data.data);
         setTotalPages(response.data.pagination.totalPages);
-        console.log("The Fetched Users are:", response.data);
+        // console.log("The Fetched details are:", response.data);
       }
     } catch (error) {
       console.error(
-        "Error fetching users:",
+        "Error fetching details:",
         error.response?.data || error.message
       );
       toast.error(
-        `Error fetching users: ${
+        `Error fetching details: ${
           error.response?.data?.message || error.message
         }`
       );
     }
   };
 
-  const searchUsers = async (query) => {
+  // Handle Page Change
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  // Delete User
+  const handleDelete = async (id) => {
+    try {
+      const response = await axios.delete(
+        `${BACKEND_URL}/api/popup-detail/delete/${id}`
+      );
+      if (response.status === 200) {
+        toast.success("Detail deleted successfully!");
+        fetchDetails();
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || error.message);
+    }
+  };
+
+  const searchDetails = async (query) => {
     if (!query.trim()) {
-      fetchUsers();
+      fetchDetails();
       return;
     }
 
     try {
       const response = await axios.get(
-        `${BACKEND_URL}/api/users/search-users`,
+        `${BACKEND_URL}/api/popup-detail/search`,
         {
           params: { query: query },
         }
       );
 
       if (response.status === 200) {
-        SetUser(response.data.data);
+        SetDetails(response.data.data);
       }
     } catch (error) {
-      console.error("Error searching users:", error);
-      toast.error("Error searching users");
+      console.error("Error searching details:", error);
+      toast.error("Error searching details");
     }
   };
 
@@ -75,30 +95,10 @@ function Users() {
     setSearchQuery(query);
 
     if (query.trim() === "") {
-      fetchUsers();
+      fetchDetails();
     } else {
-      searchUsers(query);
+      searchDetails(query);
     }
-  };
-
-  // Delete User
-  const handleDelete = async (id) => {
-    try {
-      const response = await axios.delete(
-        `${BACKEND_URL}/api/users/delete-user/${id}`
-      );
-      if (response.status === 200) {
-        toast.success("User deleted successfully!");
-        fetchUsers();
-      }
-    } catch (error) {
-      toast.error(error.response?.data?.message || error.message);
-    }
-  };
-
-  // Handle Page Change
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
   };
 
   return (
@@ -114,7 +114,7 @@ function Users() {
                 <input
                   type="text"
                   className="form-control w-25"
-                  placeholder="Search users..."
+                  placeholder="Search..."
                   value={searchQuery}
                   onChange={handleSearch}
                 />
@@ -128,40 +128,45 @@ function Users() {
                         S. No.
                       </th>
                       <th scope="col">Name</th>
-                      <th scope="col">Email</th>
-                      <th scope="col">Phone</th>
-                      <th scope="col">Subject</th>
-                      <th scope="col">Message</th>
+                      <th scope="col">Mobile Number</th>
+                      <th scope="col">Services</th>
                       <th scope="col">Status</th>
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {users.length > 0 ? (
-                      users.map((user, index) => (
-                        <tr key={user.customer_id} className="table-light">
+                    {details.length > 0 ? (
+                      details.map((details, index) => (
+                        <tr
+                          key={details.popupdetails_id}
+                          className="table-light"
+                        >
                           <th>{index + 1}</th>
-                          <td className="border text-muted">{user.name}</td>
-                          <td className="border text-muted">{user.email}</td>
-                          <td className="border text-muted">{user.phone}</td>
-                          <td className="border text-muted">{user.subject}</td>
-                          <td className="border text-muted">{user.message}</td>
+                          <td className="border text-muted">{details.name}</td>
+                          <td className="border text-muted">
+                            {details.mobile_number}
+                          </td>
+                          <td className="border text-muted">
+                            {/* {details.services} */}
+                            <td>{JSON.parse(details.services).join(", ")}</td>
+                          </td>
                           <td className="border">
-                            {/* {user.status} */}
                             <span
                               className={`badge ${
-                                user.status === "Active"
+                                details.status === "Active"
                                   ? "bg-success"
                                   : "bg-danger"
                               } p-2`}
                             >
-                              {user.status}
+                              {details.status}
                             </span>
                           </td>
                           <td>
                             <button
                               className="btn btn-danger btn-sm bg-danger"
-                              onClick={() => handleDelete(user.customer_id)}
+                              onClick={() =>
+                                handleDelete(details.popupdetails_id)
+                              }
                             >
                               <i className="bi bi-trash"></i>
                             </button>
@@ -170,8 +175,11 @@ function Users() {
                       ))
                     ) : (
                       <tr>
-                        <td colSpan="6" className="text-center">
-                          No users found!
+                        <td
+                          colSpan="6"
+                          className="text-center text-danger fw-bold border"
+                        >
+                          No details found!
                         </td>
                       </tr>
                     )}
@@ -199,7 +207,6 @@ function Users() {
               </div>
             </div>
           </div>
-
           <Footer />
         </div>
       </div>
@@ -207,4 +214,4 @@ function Users() {
   );
 }
 
-export default Users;
+export default PopupDetails;

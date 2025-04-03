@@ -89,7 +89,7 @@ function AddTestimonial() {
                       <label htmlFor="floatingPassword">Review</label>
                     </div>
                     <button type="submit" className="btn btn-primary">
-                      Sign in
+                      Add Testimonial
                     </button>
                   </form>
                 </div>
