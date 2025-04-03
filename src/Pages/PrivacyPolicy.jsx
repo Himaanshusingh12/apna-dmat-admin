@@ -23,10 +23,10 @@ function PrivacyPolicy() {
     SetformData({ content: newContent });
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    SetformData((prevData) => ({ ...prevData, [name]: value }));
-  };
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   SetformData((prevData) => ({ ...prevData, [name]: value }));
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,7 +44,6 @@ function PrivacyPolicy() {
       });
     } catch (err) {
       toast.error("Error adding Privacy & Policy");
-      console.log(err);
     }
   };
   return (

@@ -35,13 +35,8 @@ function ManageService() {
       if (response.status === 200) {
         Setservice(response.data.data);
         setTotalPages(response.data.pagination.totalPages);
-        console.log("The Fetched Service are:", response.data);
       }
     } catch (error) {
-      console.error(
-        "Error fetching service:",
-        error.response?.data || error.message
-      );
       toast.error(
         `Error fetching service: ${
           error.response?.data?.message || error.message
@@ -69,7 +64,6 @@ function ManageService() {
         Setservice(response.data.data);
       }
     } catch (error) {
-      console.error("Error searching service:", error);
       toast.error("Error searching service");
     }
   };
@@ -98,10 +92,6 @@ function ManageService() {
       toast.success("Service status updated successfully!");
       fetchService();
     } catch (error) {
-      console.error(
-        "Error updating status:",
-        error.response?.data || error.message
-      );
       toast.error(
         `Error updating status: ${
           error.response?.data?.message || error.message

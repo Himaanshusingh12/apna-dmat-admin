@@ -31,13 +31,8 @@ function Users() {
       if (response.status === 200) {
         SetUser(response.data.data);
         setTotalPages(response.data.pagination.totalPages);
-        console.log("The Fetched Users are:", response.data);
       }
     } catch (error) {
-      console.error(
-        "Error fetching users:",
-        error.response?.data || error.message
-      );
       toast.error(
         `Error fetching users: ${
           error.response?.data?.message || error.message
@@ -64,7 +59,6 @@ function Users() {
         SetUser(response.data.data);
       }
     } catch (error) {
-      console.error("Error searching users:", error);
       toast.error("Error searching users");
     }
   };

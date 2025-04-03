@@ -28,10 +28,6 @@ function AddServiceDetails() {
         Setsubservice(response.data.data);
       }
     } catch (error) {
-      console.error(
-        "Error fetching sub service:",
-        error.response?.data || error.message
-      );
       toast.error(
         `Error fetching sub service: ${
           error.response?.data?.message || error.message
@@ -117,7 +113,7 @@ function AddServiceDetails() {
       }
     } catch (error) {
       toast.error("Failed to add service details. Please try again.");
-      console.error("Error submitting form:", error);
+      // console.error("Error submitting form:", error);
     }
   };
 

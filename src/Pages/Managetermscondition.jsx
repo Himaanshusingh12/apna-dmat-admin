@@ -35,13 +35,8 @@ function Managetermscondition() {
       if (response.status === 200) {
         SetTermcondition(response.data.data);
         setTotalPages(response.data.pagination.totalPages);
-        console.log("The Fetched Terms & condition are:", response.data);
       }
     } catch (error) {
-      console.error(
-        "Error fetching terms & condition:",
-        error.response?.data || error.message
-      );
       toast.error(
         `Error fetching terms & condition: ${
           error.response?.data?.message || error.message
@@ -74,7 +69,6 @@ function Managetermscondition() {
         SetTermcondition(response.data.data);
       }
     } catch (error) {
-      console.error("Error searching terms & condition:", error);
       toast.error("Error searching terms & condition");
     }
   };
@@ -113,10 +107,6 @@ function Managetermscondition() {
       toast.success("Terms & condition status updated successfully!");
       fetchTermscondition();
     } catch (error) {
-      console.error(
-        "Error updating status:",
-        error.response?.data || error.message
-      );
       toast.error(
         `Error updating status: ${
           error.response?.data?.message || error.message

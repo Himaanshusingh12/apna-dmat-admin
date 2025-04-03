@@ -31,13 +31,8 @@ function PopupDetails() {
       if (response.status === 200) {
         SetDetails(response.data.data);
         setTotalPages(response.data.pagination.totalPages);
-        // console.log("The Fetched details are:", response.data);
       }
     } catch (error) {
-      console.error(
-        "Error fetching details:",
-        error.response?.data || error.message
-      );
       toast.error(
         `Error fetching details: ${
           error.response?.data?.message || error.message
@@ -84,7 +79,6 @@ function PopupDetails() {
         SetDetails(response.data.data);
       }
     } catch (error) {
-      console.error("Error searching details:", error);
       toast.error("Error searching details");
     }
   };

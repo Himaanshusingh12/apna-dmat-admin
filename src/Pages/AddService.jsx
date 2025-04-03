@@ -52,7 +52,7 @@ function AddService() {
       });
     } catch (err) {
       toast.success("Error Adding Service");
-      console.error(err);
+      // console.error(err);
     }
   };
   return (

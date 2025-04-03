@@ -33,13 +33,8 @@ function ManageBlogDetails() {
       if (response.status === 200) {
         Setblogdetail(response.data.data);
         setTotalPages(response.data.pagination.totalPages);
-        console.log("The Fetched blog details are:", response.data);
       }
     } catch (error) {
-      console.error(
-        "Error fetching blog detail:",
-        error.response?.data || error.message
-      );
       toast.error(
         `Error fetching  service detail: ${
           error.response?.data?.message || error.message
@@ -75,10 +70,6 @@ function ManageBlogDetails() {
       toast.success("Blog detail status updated successfully!");
       fetchBlogdetail();
     } catch (error) {
-      console.error(
-        "Error updating status:",
-        error.response?.data || error.message
-      );
       toast.error(
         `Error updating status: ${
           error.response?.data?.message || error.message
@@ -106,7 +97,6 @@ function ManageBlogDetails() {
         Setblogdetail(response.data.data);
       }
     } catch (error) {
-      console.error("Error searching blog detail:", error);
       toast.error("Error searching blog detail");
     }
   };

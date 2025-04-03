@@ -40,7 +40,7 @@ function AccountSetting() {
           setFormData(response.data.data);
         }
       } catch (error) {
-        console.error("Error fetching settings:", error);
+        // console.error("Error fetching settings:", error);
       }
     };
 
@@ -97,7 +97,7 @@ function AccountSetting() {
       }
     } catch (error) {
       toast.error("Failed to update settings. Please try again.");
-      console.error("Error submitting form:", error);
+      // console.error("Error submitting form:", error);
     }
   };
   return (

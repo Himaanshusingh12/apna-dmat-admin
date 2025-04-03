@@ -30,13 +30,8 @@ function ManageSlider() {
       if (response.status === 200) {
         Setslider(response.data.data);
         setTotalPages(response.data.pagination.totalPages);
-        console.log("The Fetched Slider detail:", response.data);
       }
     } catch (error) {
-      console.error(
-        "Error fetching slider detail:",
-        error.response?.data || error.message
-      );
       toast.error(
         `Error fetching slider detail: ${
           error.response?.data?.message || error.message
@@ -57,10 +52,6 @@ function ManageSlider() {
       toast.success("Slider status updated successfully!");
       fetchslider();
     } catch (error) {
-      console.error(
-        "Error updating status:",
-        error.response?.data || error.message
-      );
       toast.error(
         `Error updating status: ${
           error.response?.data?.message || error.message

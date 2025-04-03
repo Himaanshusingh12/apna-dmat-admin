@@ -35,10 +35,6 @@ function ManageBlogCategory() {
         // console.log("The Fetched Blog categories are:", response.data);
       }
     } catch (error) {
-      console.error(
-        "Error fetching blog categories:",
-        error.response?.data || error.message
-      );
       toast.error(
         `Error fetching blog categories: ${
           error.response?.data?.message || error.message
@@ -95,10 +91,6 @@ function ManageBlogCategory() {
       toast.success("Category status updated successfully!");
       fetchBlogcategory();
     } catch (error) {
-      console.error(
-        "Error updating status:",
-        error.response?.data || error.message
-      );
       toast.error(
         `Error updating status: ${
           error.response?.data?.message || error.message

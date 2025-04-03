@@ -51,7 +51,6 @@ function AddSlider() {
       }
     } catch (error) {
       toast.error("Failed to upload images. Please try again.");
-      console.error("Error submitting form:", error);
     }
   };
   return (

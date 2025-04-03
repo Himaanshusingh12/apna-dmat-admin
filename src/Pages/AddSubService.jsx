@@ -27,13 +27,8 @@ function AddSubService() {
       );
       if (response.status === 200) {
         Setservice(response.data.data);
-        console.log("The Fetched Service are:", response.data);
       }
     } catch (error) {
-      console.error(
-        "Error fetching service:",
-        error.response?.data || error.message
-      );
       toast.error(
         `Error fetching service: ${
           error.response?.data?.message || error.message
@@ -92,7 +87,6 @@ function AddSubService() {
       });
     } catch (err) {
       toast.success("Error Adding Service");
-      console.error(err);
     }
   };
 

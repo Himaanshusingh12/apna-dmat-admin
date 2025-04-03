@@ -18,7 +18,7 @@ function ManagePrivacyPolicy() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [selectedPrivacy, setSelectedPrivacy] = useState(null);
-  const limit = 5;
+  const limit = 10;
 
   useEffect(() => {
     fetchPrivacypolicy();
@@ -35,13 +35,8 @@ function ManagePrivacyPolicy() {
       if (response.status === 200) {
         SetPrivacypolicy(response.data.data);
         setTotalPages(response.data.pagination.totalPages);
-        console.log("The Fetched Privacy & policy are:", response.data);
       }
     } catch (error) {
-      console.error(
-        "Error fetching privacy & policy:",
-        error.response?.data || error.message
-      );
       toast.error(
         `Error fetching privacy & policy: ${
           error.response?.data?.message || error.message
@@ -74,7 +69,6 @@ function ManagePrivacyPolicy() {
         SetPrivacypolicy(response.data.data);
       }
     } catch (error) {
-      console.error("Error searching privacy & policy:", error);
       toast.error("Error searching privacy & policy");
     }
   };
@@ -98,10 +92,6 @@ function ManagePrivacyPolicy() {
       toast.success("Privacy & policy status updated successfully!");
       fetchPrivacypolicy();
     } catch (error) {
-      console.error(
-        "Error updating status:",
-        error.response?.data || error.message
-      );
       toast.error(
         `Error updating status: ${
           error.response?.data?.message || error.message

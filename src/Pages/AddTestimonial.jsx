@@ -48,7 +48,6 @@ function AddTestimonial() {
       });
     } catch (err) {
       toast.success("Error Adding Testimonial");
-      console.error(err);
     }
   };
 

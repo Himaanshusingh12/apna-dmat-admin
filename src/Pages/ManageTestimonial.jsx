@@ -34,13 +34,8 @@ function ManageTestimonial() {
       if (response.status === 200) {
         SetTestimonial(response.data.data);
         setTotalPages(response.data.pagination.totalPages);
-        console.log("The Fetched Testimonial are:", response.data);
       }
     } catch (error) {
-      console.error(
-        "Error fetching testimonial:",
-        error.response?.data || error.message
-      );
       toast.error(
         `Error fetching testimonial: ${
           error.response?.data?.message || error.message
@@ -67,7 +62,6 @@ function ManageTestimonial() {
         SetTestimonial(response.data.data);
       }
     } catch (error) {
-      console.error("Error searching testimonial:", error);
       toast.error("Error searching testimonial");
     }
   };

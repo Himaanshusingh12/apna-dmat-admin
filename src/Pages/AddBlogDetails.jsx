@@ -27,13 +27,9 @@ function AddBlogDetails() {
       );
       if (response.status === 200) {
         SetBlog(response.data.data);
-        console.log("The fetch Active Blog Category are", response.data);
+        // console.log("The fetch Active Blog Category are", response.data);
       }
     } catch (error) {
-      console.error(
-        "Error fetching blog category:",
-        error.response?.data || error.message
-      );
       toast.error(
         `Error fetching blog category: ${
           error.response?.data?.message || error.message
@@ -140,7 +136,7 @@ function AddBlogDetails() {
       }
     } catch (error) {
       toast.error("Failed to add blog details. Please try again.");
-      console.error("Error submitting form:", error);
+      // console.error("Error submitting form:", error);
     }
   };
 
