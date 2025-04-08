@@ -18,7 +18,7 @@ function ManageService() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [selectedService, setSelectedService] = useState(null);
-  const limit = 3;
+  const limit = 10;
 
   useEffect(() => {
     fetchService();
