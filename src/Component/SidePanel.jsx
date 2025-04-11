@@ -6,9 +6,9 @@ function SidePanel() {
     <>
       <div className="sidebar pe-4 pb-3">
         <nav className="navbar bg-light navbar-light">
-          <a href="index.html" className="navbar-brand mx-4 mb-3">
+          <NavLink to="/dashboard" className="navbar-brand mx-4 mb-3">
             <h3 className="text-primary">Apna Dmat</h3>
-          </a>
+          </NavLink>
           <div className="d-flex align-items-center ms-4 mb-4">
             <div className="position-relative">
               <img
@@ -19,7 +19,7 @@ function SidePanel() {
               />
             </div>
             <div className="ms-3">
-              <h6 className="mb-0">Jhon Doe</h6>
+              <h6 className="mb-0">Mayank Joshi</h6>
               <span>Admin</span>
             </div>
           </div>

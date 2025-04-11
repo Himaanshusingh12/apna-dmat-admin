@@ -5,6 +5,8 @@ import Header from "../Component/Header";
 import axios from "axios";
 import { BACKEND_URL } from "../Constant";
 import { toast } from "react-toastify";
+import JoditEditor from "jodit-react";
+import { stripHtml } from "string-strip-html";
 
 function ManageBlogDetails() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -41,6 +43,12 @@ function ManageBlogDetails() {
         }`
       );
     }
+  };
+
+  const stripHtml = (html) => {
+    const div = document.createElement("div");
+    div.innerHTML = html;
+    return div.textContent || div.innerText || "";
   };
 
   // Handle Page Change
@@ -129,6 +137,7 @@ function ManageBlogDetails() {
       formData.append("meta_title", selecteddetail.meta_title);
       formData.append("meta_description", selecteddetail.meta_description);
       formData.append("meta_keywords", selecteddetail.meta_keywords);
+      formData.append("slug", selecteddetail.slug);
       if (imageFile) {
         // console.log("Image File:", imageFile);
         formData.append("image", imageFile);
@@ -210,14 +219,32 @@ function ManageBlogDetails() {
                           <td className="border text-muted">
                             {blogdetail.title}
                           </td>
-                          <td className="border text-muted">
-                            {blogdetail.description}
+
+                          <td
+                            className="border text-muted"
+                            title={stripHtml(blogdetail.description)}
+                          >
+                            {stripHtml(blogdetail.description).length > 100
+                              ? stripHtml(blogdetail.description).slice(
+                                  0,
+                                  100
+                                ) + "..."
+                              : stripHtml(blogdetail.description)}
                           </td>
+
                           <td className="border fw-bold text-secondary">
                             {blogdetail.meta_title}
                           </td>
-                          <td className="border text-muted">
-                            {blogdetail.meta_description}
+                          <td
+                            className="border text-muted"
+                            title={stripHtml(blogdetail.meta_description)}
+                          >
+                            {stripHtml(blogdetail.meta_description).length > 100
+                              ? stripHtml(blogdetail.meta_description).slice(
+                                  0,
+                                  100
+                                ) + "..."
+                              : stripHtml(blogdetail.meta_description)}
                           </td>
                           <td className="border text-muted">
                             {blogdetail.meta_keywords}
@@ -291,7 +318,7 @@ function ManageBlogDetails() {
                     tabIndex="-1"
                     aria-hidden="true"
                   >
-                    <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-dialog modal-fullscreen">
                       <div className="modal-content">
                         <div className="modal-header bg-primary text-white">
                           <h5 className="modal-title">Edit Blog detail</h5>
@@ -330,14 +357,12 @@ function ManageBlogDetails() {
                           </div>
                           <div className="mb-3">
                             <label className="form-label">Description</label>
-                            <input
-                              type="text"
-                              className="form-control"
+                            <JoditEditor
                               value={selecteddetail?.description || ""}
-                              onChange={(e) =>
+                              onChange={(newContent) =>
                                 setSelectedDetail({
                                   ...selecteddetail,
-                                  description: e.target.value,
+                                  description: newContent,
                                 })
                               }
                             />
@@ -379,6 +404,19 @@ function ManageBlogDetails() {
                                 setSelectedDetail({
                                   ...selecteddetail,
                                   meta_keywords: e.target.value,
+                                })
+                              }
+                            />
+                          </div>
+                          <div className="mb-3">
+                            <label className="form-label">Slug</label>
+                            <input
+                              className="form-control"
+                              value={selecteddetail?.slug || ""}
+                              onChange={(e) =>
+                                setSelectedDetail({
+                                  ...selecteddetail,
+                                  slug: e.target.value,
                                 })
                               }
                             />

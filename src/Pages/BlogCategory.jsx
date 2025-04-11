@@ -15,7 +15,13 @@ function BlogCategory() {
 
   const [formData, setFormData] = useState({
     category: "",
+    image: null,
   });
+
+  const handleFileChange = (e) => {
+    const { name, files } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: files[0] }));
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,15 +36,28 @@ function BlogCategory() {
       return;
     }
 
+    if (!formData.image) {
+      toast.error("Image is required");
+      return;
+    }
+
+    const formDataToSend = new FormData();
+    formDataToSend.append("category", formData.category);
+    formDataToSend.append("image", formData.image);
+
     try {
-      await axios.post(`${BACKEND_URL}/api/blog-category/add`, formData);
+      await axios.post(`${BACKEND_URL}/api/blog-category/add`, formDataToSend, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       toast.success("Blog Category added successfully");
       setFormData({
         category: "",
+        image: null,
       });
     } catch (err) {
       toast.error("Error Adding Blog Category");
-      // console.error(err);
     }
   };
 
@@ -70,6 +89,19 @@ function BlogCategory() {
                       />
                       <label htmlFor="category">Enter Category</label>
                     </div>
+
+                    <div className="form-floating mb-3">
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="image"
+                        name="image"
+                        onChange={handleFileChange}
+                        placeholder="Upload Image"
+                      />
+                      <label htmlFor="image">Upload Image</label>
+                    </div>
+
                     <button type="submit" className="btn btn-primary">
                       Add Category
                     </button>

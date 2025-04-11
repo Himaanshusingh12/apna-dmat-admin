@@ -5,6 +5,8 @@ import Footer from "../Component/Footer";
 import { BACKEND_URL } from "../Constant";
 import { toast } from "react-toastify";
 import axios from "axios";
+import JoditEditor from "jodit-react";
+// import JoditTextEditor from "../Component/JoditEditor";
 
 function AddBlogDetails() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -27,7 +29,6 @@ function AddBlogDetails() {
       );
       if (response.status === 200) {
         SetBlog(response.data.data);
-        // console.log("The fetch Active Blog Category are", response.data);
       }
     } catch (error) {
       toast.error(
@@ -82,21 +83,6 @@ function AddBlogDetails() {
       return;
     }
 
-    if (formData.meta_title === "") {
-      toast.error("Meta title field is required");
-      return;
-    }
-
-    if (formData.meta_description === "") {
-      toast.error("Meta description field is required");
-      return;
-    }
-
-    if (formData.meta_keywords === "") {
-      toast.error("Meta keywords field is required");
-      return;
-    }
-
     const formDataToSend = new FormData();
 
     // Append files if selected
@@ -148,9 +134,9 @@ function AddBlogDetails() {
           <Header onToggleSidebar={toggleSidebar} />
           <div className="container-fluid pt-4 px-4">
             <div className="row g-4">
-              <div className="col-sm-12 col-xl-6">
+              <div className="col-sm-12 col-xl-12">
                 <div className="bg-light rounded h-100 p-4">
-                  <h6 className="mb-4">Add Sub Service Details</h6>
+                  <h6 className="mb-4">Add Blog Details</h6>
                   <form onSubmit={handleSubmit}>
                     <div className="form-floating mb-3">
                       <select
@@ -202,17 +188,14 @@ function AddBlogDetails() {
                     </div>
 
                     {/* Description Field */}
-                    <div className="form-floating mb-3">
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="description"
-                        name="description"
+                    <div className="mb-3">
+                      <label className="form-label">Description</label>
+                      <JoditEditor
                         value={formData.description}
-                        onChange={handleChange}
-                        placeholder="Enter description"
+                        onChange={(newContent) =>
+                          setFormData({ ...formData, description: newContent })
+                        }
                       />
-                      <label htmlFor="description">Description</label>
                     </div>
 
                     {/* Sort description Field */}
@@ -229,17 +212,17 @@ function AddBlogDetails() {
                       <label htmlFor="meta_title">Meta Title</label>
                     </div>
 
-                    <div className="form-floating mb-3">
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="meta_description"
-                        name="meta_description"
+                    <div className="mb-3">
+                      <label className="form-label">Meta Description</label>
+                      <JoditEditor
                         value={formData.meta_description}
-                        onChange={handleChange}
-                        placeholder="Enter Meta Description"
+                        onChange={(newContent) =>
+                          setFormData({
+                            ...formData,
+                            meta_description: newContent,
+                          })
+                        }
                       />
-                      <label htmlFor="meta_description">Meta Discription</label>
                     </div>
 
                     <div className="form-floating mb-3">

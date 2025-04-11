@@ -17,7 +17,7 @@ function ManageTestimonial() {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const limit = 5;
+  const limit = 10;
 
   useEffect(() => {
     fetchTestimonial();

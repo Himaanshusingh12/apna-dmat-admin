@@ -18,7 +18,7 @@ function ManageSubService() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [selectedsubService, setSelectedsubService] = useState(null);
-  const limit = 4;
+  const limit = 10;
 
   useEffect(() => {
     fetchsubService();

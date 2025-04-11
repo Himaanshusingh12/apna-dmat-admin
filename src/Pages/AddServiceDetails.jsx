@@ -5,6 +5,7 @@ import Footer from "../Component/Footer";
 import axios from "axios";
 import { BACKEND_URL } from "../Constant";
 import { toast } from "react-toastify";
+import JoditEditor from "jodit-react";
 
 function AddServiceDetails() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -125,7 +126,7 @@ function AddServiceDetails() {
           <Header onToggleSidebar={toggleSidebar} />
           <div className="container-fluid pt-4 px-4">
             <div className="row g-4">
-              <div className="col-sm-12 col-xl-6">
+              <div className="col-sm-12 col-xl-12">
                 <div className="bg-light rounded h-100 p-4">
                   <h6 className="mb-4">Add Sub Service Details</h6>
                   <form onSubmit={handleSubmit}>
@@ -169,7 +170,7 @@ function AddServiceDetails() {
                     </div>
 
                     {/* Sort description Field */}
-                    <div className="form-floating mb-3">
+                    {/* <div className="form-floating mb-3">
                       <input
                         type="text"
                         className="form-control"
@@ -180,10 +181,22 @@ function AddServiceDetails() {
                         placeholder="Enter Sort Description"
                       />
                       <label htmlFor="sort_description">Sort Description</label>
+                    </div> */}
+                    <div className="mb-3">
+                      <label className="form-label">Sort Description</label>
+                      <JoditEditor
+                        value={formData.sort_description}
+                        onChange={(newContent) =>
+                          setFormData({
+                            ...formData,
+                            sort_description: newContent,
+                          })
+                        }
+                      />
                     </div>
 
                     {/* Description Field */}
-                    <div className="form-floating mb-3">
+                    {/* <div className="form-floating mb-3">
                       <input
                         type="text"
                         className="form-control"
@@ -194,6 +207,15 @@ function AddServiceDetails() {
                         placeholder="Enter description"
                       />
                       <label htmlFor="description">Description</label>
+                    </div> */}
+                    <div className="mb-3">
+                      <label className="form-label">Description</label>
+                      <JoditEditor
+                        value={formData.description}
+                        onChange={(newContent) =>
+                          setFormData({ ...formData, description: newContent })
+                        }
+                      />
                     </div>
 
                     <button type="submit" className="btn btn-primary">

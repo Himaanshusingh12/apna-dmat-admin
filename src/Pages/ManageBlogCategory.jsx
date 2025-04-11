@@ -18,6 +18,7 @@ function ManageBlogCategory() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
   const limit = 10;
 
   useEffect(() => {
@@ -113,21 +114,57 @@ function ManageBlogCategory() {
     }
   };
 
+  // // Handle Blog category Update
+  // const handleUpdatecategory = async () => {
+  //   if (!selectedCategory) return;
+
+  //   try {
+  //     await axios.put(
+  //       `${BACKEND_URL}/api/blog-category/edit/${selectedCategory.blog_id}`,
+  //       {
+  //         category: selectedCategory.category,
+  //       }
+  //     );
+
+  //     toast.success("Blog category updated successfully!");
+  //     fetchBlogcategory();
+  //     setSelectedCategory(null);
+  //   } catch (error) {
+  //     toast.error("Error updating blog category");
+  //   }
+  // };
+
+  // new one
+  // Handle Image Change
+  const handleImageChange = (e) => {
+    setImageFile(e.target.files[0]);
+  };
+
   // Handle Blog category Update
   const handleUpdatecategory = async () => {
     if (!selectedCategory) return;
 
     try {
+      const formData = new FormData();
+      formData.append("category", selectedCategory.category);
+      if (imageFile) {
+        formData.append("image", imageFile);
+      }
+
       await axios.put(
         `${BACKEND_URL}/api/blog-category/edit/${selectedCategory.blog_id}`,
+        formData,
         {
-          category: selectedCategory.category,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
 
       toast.success("Blog category updated successfully!");
       fetchBlogcategory();
       setSelectedCategory(null);
+      setImageFile(null);
     } catch (error) {
       toast.error("Error updating blog category");
     }
@@ -159,6 +196,7 @@ function ManageBlogCategory() {
                         S. No.
                       </th>
                       <th scope="col">Categories</th>
+                      <th scope="col">Image</th>
                       <th scope="col">Status</th>
                       <th scope="col">Action</th>
                     </tr>
@@ -169,6 +207,17 @@ function ManageBlogCategory() {
                         <tr key={blog.blog_id} className="table-light">
                           <th>{index + 1}</th>
                           <td className="border text-muted">{blog.category}</td>
+                          <td>
+                            <img
+                              src={blog.image}
+                              alt=""
+                              style={{
+                                width: "100px",
+                                height: "auto",
+                                borderRadius: "5px",
+                              }}
+                            />
+                          </td>
                           <td className="border">
                             <span
                               className={`badge ${
@@ -259,6 +308,16 @@ function ManageBlogCategory() {
                                   category: e.target.value,
                                 })
                               }
+                            />
+                          </div>
+                          <div className="mb-3">
+                            <label className="form-label">
+                              Upload New Image
+                            </label>
+                            <input
+                              type="file"
+                              className="form-control"
+                              onChange={handleImageChange}
                             />
                           </div>
                         </div>
