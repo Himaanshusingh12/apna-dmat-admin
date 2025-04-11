@@ -20,6 +20,7 @@ const JoditTextEditor = ({ value, onChange }) => {
       value={value}
       config={config}
       onBlur={(newContent) => onChange(newContent)}
+      // onChange={(newContent) => onChange(newContent)}
     />
   );
 };
