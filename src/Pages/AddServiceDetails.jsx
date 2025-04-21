@@ -170,7 +170,7 @@ function AddServiceDetails() {
                     </div>
 
                     {/* Sort description Field */}
-                    {/* <div className="form-floating mb-3">
+                    <div className="form-floating mb-3">
                       <input
                         type="text"
                         className="form-control"
@@ -181,8 +181,8 @@ function AddServiceDetails() {
                         placeholder="Enter Sort Description"
                       />
                       <label htmlFor="sort_description">Sort Description</label>
-                    </div> */}
-                    <div className="mb-3">
+                    </div>
+                    {/* <div className="mb-3">
                       <label className="form-label">Sort Description</label>
                       <JoditEditor
                         value={formData.sort_description}
@@ -193,7 +193,7 @@ function AddServiceDetails() {
                           })
                         }
                       />
-                    </div>
+                    </div> */}
 
                     {/* Description Field */}
                     {/* <div className="form-floating mb-3">

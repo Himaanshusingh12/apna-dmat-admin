@@ -126,6 +126,9 @@ function ManageService() {
           icon: selectedService.icon,
           title: selectedService.title,
           description: selectedService.description,
+          meta_title: selectedService.meta_title,
+          meta_description: selectedService.meta_description,
+          meta_keywords: selectedService.meta_keywords,
         }
       );
 
@@ -164,6 +167,9 @@ function ManageService() {
                       <th scope="col">Icon</th>
                       <th scope="col">Title</th>
                       <th scope="col">Description</th>
+                      <th scope="col">Meta Title</th>
+                      <th scope="col">Meta Description</th>
+                      <th scope="col">Meta Keywords</th>
                       <th scope="col">Status</th>
                       <th scope="col">Action</th>
                     </tr>
@@ -179,6 +185,15 @@ function ManageService() {
                           </td>
                           <td className="border text-muted">
                             {service.description}
+                          </td>
+                          <td className="border text-muted">
+                            {service.meta_title}
+                          </td>
+                          <td className="border text-muted">
+                            {service.meta_description}
+                          </td>
+                          <td className="border text-muted">
+                            {service.meta_keywords}
                           </td>
                           <td className="border">
                             <span
@@ -295,6 +310,47 @@ function ManageService() {
                                 setSelectedService({
                                   ...selectedService,
                                   description: e.target.value,
+                                })
+                              }
+                            ></textarea>
+                          </div>
+                          <div className="mb-3">
+                            <label className="form-label">Meta Title</label>
+                            <input
+                              className="form-control"
+                              value={selectedService?.meta_title || ""}
+                              onChange={(e) =>
+                                setSelectedService({
+                                  ...selectedService,
+                                  meta_title: e.target.value,
+                                })
+                              }
+                            />
+                          </div>
+                          <div className="mb-3">
+                            <label className="form-label">
+                              Meta Description
+                            </label>
+                            <textarea
+                              className="form-control"
+                              value={selectedService?.meta_description || ""}
+                              onChange={(e) =>
+                                setSelectedService({
+                                  ...selectedService,
+                                  meta_description: e.target.value,
+                                })
+                              }
+                            ></textarea>
+                          </div>
+                          <div className="mb-3">
+                            <label className="form-label">Meta Keywords</label>
+                            <textarea
+                              className="form-control"
+                              value={selectedService?.meta_keywords || ""}
+                              onChange={(e) =>
+                                setSelectedService({
+                                  ...selectedService,
+                                  meta_keywords: e.target.value,
                                 })
                               }
                             ></textarea>

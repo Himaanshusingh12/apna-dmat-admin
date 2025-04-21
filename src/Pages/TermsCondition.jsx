@@ -3,9 +3,9 @@ import SidePanel from "../Component/SidePanel";
 import Header from "../Component/Header";
 import Footer from "../Component/Footer";
 import { toast } from "react-toastify";
-import JoditTextEditor from "../Component/JoditEditor";
 import { BACKEND_URL } from "../Constant";
 import axios from "axios";
+import JoditEditor from "jodit-react";
 
 function TermsCondition() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -60,7 +60,7 @@ function TermsCondition() {
                   <form onSubmit={handleSubmit}>
                     <div className="form-floating mb-3">
                       <div className="mb-3">
-                        <JoditTextEditor
+                        <JoditEditor
                           value={formData.content}
                           onChange={handleEditorChange}
                         />

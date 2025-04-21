@@ -5,6 +5,7 @@ import Footer from "../Component/Footer";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { BACKEND_URL } from "../Constant";
+import JoditEditor from "jodit-react";
 
 function ManageServiceDetails() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -44,6 +45,12 @@ function ManageServiceDetails() {
         }`
       );
     }
+  };
+
+  const stripHtml = (html) => {
+    const div = document.createElement("div");
+    div.innerHTML = html;
+    return div.textContent || div.innerText || "";
   };
 
   // Handle Page Change
@@ -210,9 +217,18 @@ function ManageServiceDetails() {
                           <td className="border fw-bold text-secondary">
                             {servicedetail.sort_description}
                           </td>
-                          <td className="border text-muted">
-                            {servicedetail.description}
+                          <td
+                            className="border text-muted"
+                            title={stripHtml(servicedetail.description)}
+                          >
+                            {stripHtml(servicedetail.description).length > 100
+                              ? stripHtml(servicedetail.description).slice(
+                                  0,
+                                  100
+                                ) + "..."
+                              : stripHtml(servicedetail.description)}
                           </td>
+
                           <td className="border text-center">
                             <span
                               className={`badge ${
@@ -282,7 +298,7 @@ function ManageServiceDetails() {
                     tabIndex="-1"
                     aria-hidden="true"
                   >
-                    <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-dialog modal-fullscreen">
                       <div className="modal-content">
                         <div className="modal-header bg-primary text-white">
                           <h5 className="modal-title">Edit Sub Service</h5>
@@ -309,8 +325,7 @@ function ManageServiceDetails() {
                             <label className="form-label">
                               Short Description
                             </label>
-                            <input
-                              type="text"
+                            <textarea
                               className="form-control"
                               value={selecteddetail?.sort_description || ""}
                               onChange={(e) =>
@@ -323,16 +338,15 @@ function ManageServiceDetails() {
                           </div>
                           <div className="mb-3">
                             <label className="form-label">Description</label>
-                            <textarea
-                              className="form-control"
+                            <JoditEditor
                               value={selecteddetail?.description || ""}
-                              onChange={(e) =>
+                              onChange={(newContent) =>
                                 setSelectedDetail({
                                   ...selecteddetail,
-                                  description: e.target.value,
+                                  description: newContent,
                                 })
                               }
-                            ></textarea>
+                            />
                           </div>
                         </div>
                         <div className="modal-footer">

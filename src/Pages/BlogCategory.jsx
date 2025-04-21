@@ -16,6 +16,9 @@ function BlogCategory() {
   const [formData, setFormData] = useState({
     category: "",
     image: null,
+    meta_title: "",
+    meta_description: "",
+    meta_keywords: "",
   });
 
   const handleFileChange = (e) => {
@@ -45,6 +48,18 @@ function BlogCategory() {
     formDataToSend.append("category", formData.category);
     formDataToSend.append("image", formData.image);
 
+    if (formData.meta_title) {
+      formDataToSend.append("meta_title", formData.meta_title);
+    }
+
+    if (formData.meta_description) {
+      formDataToSend.append("meta_description", formData.meta_description);
+    }
+
+    if (formData.meta_keywords) {
+      formDataToSend.append("meta_keywords", formData.meta_keywords);
+    }
+
     try {
       await axios.post(`${BACKEND_URL}/api/blog-category/add`, formDataToSend, {
         headers: {
@@ -55,6 +70,9 @@ function BlogCategory() {
       setFormData({
         category: "",
         image: null,
+        meta_title: "",
+        meta_description: "",
+        meta_keywords: "",
       });
     } catch (err) {
       toast.error("Error Adding Blog Category");
@@ -100,6 +118,39 @@ function BlogCategory() {
                         placeholder="Upload Image"
                       />
                       <label htmlFor="image">Upload Image</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="meta_title"
+                        name="meta_title"
+                        onChange={handleChange}
+                        placeholder="Enter meta title"
+                      />
+                      <label htmlFor="meta_title">Meta Title</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                      <textarea
+                        type="text"
+                        className="form-control"
+                        id="meta_description"
+                        name="meta_description"
+                        onChange={handleChange}
+                        placeholder="Enter meta description"
+                      ></textarea>
+                      <label htmlFor="meta_description">Meta Description</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                      <textarea
+                        type="text"
+                        className="form-control"
+                        id="meta_keywords"
+                        name="meta_keywords"
+                        onChange={handleChange}
+                        placeholder="Enter meta keywords"
+                      ></textarea>
+                      <label htmlFor="meta_keywords">Meta Keywords</label>
                     </div>
 
                     <button type="submit" className="btn btn-primary">

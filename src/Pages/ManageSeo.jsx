@@ -6,39 +6,36 @@ import axios from "axios";
 import { BACKEND_URL } from "../Constant";
 import { toast } from "react-toastify";
 
-function ManageSubService() {
+function ManageSeo() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const [subservice, Setsubservice] = useState([]);
+  const [seodetail, Setseodetail] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [selectedsubService, setSelectedsubService] = useState(null);
+  const [selectedseoDetail, setSelectedseoDetail] = useState(null);
   const limit = 10;
 
   useEffect(() => {
-    fetchsubService();
+    fetchseoDetail();
   }, [currentPage]);
 
-  const fetchsubService = async () => {
+  const fetchseoDetail = async () => {
     try {
-      const response = await axios.get(
-        `${BACKEND_URL}/api/subservice/get-subservice`,
-        {
-          params: { page: currentPage, limit: limit },
-        }
-      );
+      const response = await axios.get(`${BACKEND_URL}/api/seo/get`, {
+        params: { page: currentPage, limit: limit },
+      });
       if (response.status === 200) {
-        Setsubservice(response.data.data);
+        Setseodetail(response.data.data);
         setTotalPages(response.data.pagination.totalPages);
       }
     } catch (error) {
       toast.error(
-        `Error fetching sub service: ${
+        `Error fetching seo detail: ${
           error.response?.data?.message || error.message
         }`
       );
@@ -46,25 +43,22 @@ function ManageSubService() {
   };
 
   // search sub service
-  const searchsubService = async (query) => {
+  const searchseodetail = async (query) => {
     if (!query.trim()) {
-      fetchsubService();
+      fetchseoDetail();
       return;
     }
 
     try {
-      const response = await axios.get(
-        `${BACKEND_URL}/api/subservice/search-subservice`,
-        {
-          params: { query: query },
-        }
-      );
+      const response = await axios.get(`${BACKEND_URL}/api/seo/search`, {
+        params: { query: query },
+      });
 
       if (response.status === 200) {
-        Setsubservice(response.data.data);
+        Setseodetail(response.data.data);
       }
     } catch (error) {
-      toast.error("Error searching service");
+      toast.error("Error searching");
     }
   };
 
@@ -74,9 +68,9 @@ function ManageSubService() {
     setSearchQuery(query);
 
     if (query.trim() === "") {
-      fetchsubService();
+      fetchseoDetail();
     } else {
-      searchsubService(query);
+      searchseodetail(query);
     }
   };
 
@@ -85,68 +79,33 @@ function ManageSubService() {
     setCurrentPage(newPage);
   };
 
-  // Toggle Active/Inactive status
-  const toggleStatus = async (id) => {
-    try {
-      await axios.put(`${BACKEND_URL}/api/subservice/subservice-status/${id}`);
-      toast.success("Sub Service status updated successfully!");
-      fetchsubService();
-    } catch (error) {
-      toast.error(
-        `Error updating status: ${
-          error.response?.data?.message || error.message
-        }`
-      );
-    }
-  };
-
-  // Delete Service
-  const handleDelete = async (id) => {
-    try {
-      const response = await axios.delete(
-        `${BACKEND_URL}/api/subservice/delete-subservice/${id}`
-      );
-      if (response.status === 200) {
-        toast.success("Sub Service deleted successfully!");
-        fetchsubService();
-      }
-    } catch (error) {
-      toast.error(error.response?.data?.message || error.message);
-    }
-  };
-
   // Handle Service Update
-  const handleUpdatesubService = async () => {
-    if (!selectedsubService) return;
+  const handleUpdateseoDetail = async () => {
+    if (!selectedseoDetail) return;
 
     try {
       await axios.put(
-        `${BACKEND_URL}/api/subservice/edit-subservice/${selectedsubService.subservice_id}`,
+        `${BACKEND_URL}/api/seo/edit/${selectedseoDetail.seo_id}`,
         {
-          icon: selectedsubService.icon,
-          title: selectedsubService.title,
-          description: selectedsubService.description,
-          meta_title: selectedsubService.meta_title,
-          meta_description: selectedsubService.meta_description,
-          meta_keywords: selectedsubService.meta_keywords,
+          page_name: selectedseoDetail.page_name,
+          meta_title: selectedseoDetail.meta_title,
+          meta_description: selectedseoDetail.meta_description,
+          meta_keywords: selectedseoDetail.meta_keywords,
         }
       );
 
-      toast.success("Sub service updated successfully!");
-      fetchsubService();
-      setSelectedsubService(null);
+      toast.success("Seo detail updated successfully!");
+      fetchseoDetail();
+      setSelectedseoDetail(null);
     } catch (error) {
-      toast.error("Error updating service");
+      toast.error("Error updating Seo detail");
     }
   };
   return (
     <>
       <div className="container-fluid position-relative bg-white d-flex p-0">
-        {/* <SidePanel /> */}
         {isSidebarOpen && <SidePanel />}
-        {/* <div className="content"> */}
         <div className={`content ${isSidebarOpen ? "content-open" : ""}`}>
-          {/* <Header /> */}
           <Header onToggleSidebar={toggleSidebar} />
           <div className="col-12 mt-2">
             <div className="bg-white shadow rounded h-100 p-4 border">
@@ -155,7 +114,7 @@ function ManageSubService() {
                 <input
                   type="text"
                   className="form-control w-25 border-primary shadow-sm"
-                  placeholder="Search titles..."
+                  placeholder="Search details..."
                   value={searchQuery}
                   onChange={handleSearch}
                 />
@@ -165,9 +124,7 @@ function ManageSubService() {
                   <thead className="bg-primary text-white">
                     <tr>
                       <th scope="col">S. No.</th>
-                      <th scope="col">Icon</th>
-                      <th scope="col">Title</th>
-                      <th scope="col">Description</th>
+                      <th scope="col">Page Name</th>
                       <th scope="col">Meta Title</th>
                       <th scope="col">Meta Description</th>
                       <th scope="col">Meta Keywords</th>
@@ -176,40 +133,31 @@ function ManageSubService() {
                     </tr>
                   </thead>
                   <tbody>
-                    {subservice.length > 0 ? (
-                      subservice.map((subservice, index) => (
-                        <tr
-                          key={subservice.subservice_id}
-                          className="table-light"
-                        >
+                    {seodetail.length > 0 ? (
+                      seodetail.map((detail, index) => (
+                        <tr key={detail.seo_id} className="table-light">
                           <th>{index + 1}</th>
                           <td className="border text-muted">
-                            {subservice.icon}
+                            {detail.page_name}
                           </td>
                           <td className="border fw-bold text-secondary">
-                            {subservice.title}
+                            {detail.meta_title}
                           </td>
                           <td className="border text-muted">
-                            {subservice.description}
+                            {detail.meta_description}
                           </td>
                           <td className="border text-muted">
-                            {subservice.meta_title}
-                          </td>
-                          <td className="border text-muted">
-                            {subservice.meta_description}
-                          </td>
-                          <td className="border text-muted">
-                            {subservice.meta_keywords}
+                            {detail.meta_keywords}
                           </td>
                           <td className="border">
                             <span
                               className={`badge ${
-                                subservice.status === "Active"
+                                detail.status === "Active"
                                   ? "bg-success"
                                   : "bg-danger"
                               } p-2`}
                             >
-                              {subservice.status}
+                              {detail.status}
                             </span>
                           </td>
                           <td>
@@ -220,7 +168,7 @@ function ManageSubService() {
                                 gap: "10px",
                               }}
                             >
-                              <i
+                              {/* <i
                                 className={`fa ${
                                   subservice.status === "Active"
                                     ? "fa-toggle-on text-success"
@@ -230,7 +178,7 @@ function ManageSubService() {
                                 onClick={() =>
                                   toggleStatus(subservice.subservice_id)
                                 }
-                              ></i>
+                              ></i> */}
                               <i
                                 className="fa fa-edit text-primary"
                                 style={{
@@ -239,17 +187,15 @@ function ManageSubService() {
                                 }}
                                 data-bs-toggle="modal"
                                 data-bs-target="#editServiceModal"
-                                onClick={() =>
-                                  setSelectedsubService(subservice)
-                                }
+                                onClick={() => setSelectedseoDetail(detail)}
                               ></i>
-                              <i
+                              {/* <i
                                 className="fa fa-trash text-danger"
                                 style={{ fontSize: "24px", cursor: "pointer" }}
                                 onClick={() =>
                                   handleDelete(subservice.subservice_id)
                                 }
-                              ></i>
+                              ></i> */}
                             </span>
                           </td>
                         </tr>
@@ -260,7 +206,7 @@ function ManageSubService() {
                           colSpan="6"
                           className="text-center text-danger fw-bold border"
                         >
-                          No Subservice Found!
+                          No Seo Detail Found!
                         </td>
                       </tr>
                     )}
@@ -275,7 +221,7 @@ function ManageSubService() {
                     <div className="modal-dialog modal-dialog-centered">
                       <div className="modal-content">
                         <div className="modal-header bg-primary text-white">
-                          <h5 className="modal-title">Edit Sub Service</h5>
+                          <h5 className="modal-title">Edit Seo Detail</h5>
                           <button
                             type="button"
                             className="btn-close"
@@ -285,54 +231,28 @@ function ManageSubService() {
                         </div>
                         <div className="modal-body bg-primary text-white">
                           <div className="mb-3">
-                            <label className="form-label">Icon</label>
+                            <label className="form-label">Page Name</label>
                             <input
                               type="text"
                               className="form-control"
-                              value={selectedsubService?.icon || ""}
+                              value={selectedseoDetail?.page_name || ""}
                               onChange={(e) =>
-                                setSelectedsubService({
-                                  ...selectedsubService,
-                                  icon: e.target.value,
+                                setSelectedseoDetail({
+                                  ...selectedseoDetail,
+                                  page_name: e.target.value,
                                 })
                               }
                             />
-                          </div>
-                          <div className="mb-3">
-                            <label className="form-label">Title</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              value={selectedsubService?.title || ""}
-                              onChange={(e) =>
-                                setSelectedsubService({
-                                  ...selectedsubService,
-                                  title: e.target.value,
-                                })
-                              }
-                            />
-                          </div>
-                          <div className="mb-3">
-                            <label className="form-label">Description</label>
-                            <textarea
-                              className="form-control"
-                              value={selectedsubService?.description || ""}
-                              onChange={(e) =>
-                                setSelectedsubService({
-                                  ...selectedsubService,
-                                  description: e.target.value,
-                                })
-                              }
-                            ></textarea>
                           </div>
                           <div className="mb-3">
                             <label className="form-label">Meta Title</label>
                             <input
+                              type="text"
                               className="form-control"
-                              value={selectedsubService?.meta_title || ""}
+                              value={selectedseoDetail?.meta_title || ""}
                               onChange={(e) =>
-                                setSelectedsubService({
-                                  ...selectedsubService,
+                                setSelectedseoDetail({
+                                  ...selectedseoDetail,
                                   meta_title: e.target.value,
                                 })
                               }
@@ -344,23 +264,24 @@ function ManageSubService() {
                             </label>
                             <textarea
                               className="form-control"
-                              value={selectedsubService?.meta_description || ""}
+                              value={selectedseoDetail?.meta_description || ""}
                               onChange={(e) =>
-                                setSelectedsubService({
-                                  ...selectedsubService,
+                                setSelectedseoDetail({
+                                  ...selectedseoDetail,
                                   meta_description: e.target.value,
                                 })
                               }
                             ></textarea>
                           </div>
                           <div className="mb-3">
-                            <label className="form-label">Meta Keywords</label>
+                            <label className="form-label">Meta Keyword</label>
                             <input
+                              type="text"
                               className="form-control"
-                              value={selectedsubService?.meta_keywords || ""}
+                              value={selectedseoDetail?.meta_keywords || ""}
                               onChange={(e) =>
-                                setSelectedsubService({
-                                  ...selectedsubService,
+                                setSelectedseoDetail({
+                                  ...selectedseoDetail,
                                   meta_keywords: e.target.value,
                                 })
                               }
@@ -378,7 +299,7 @@ function ManageSubService() {
                           <button
                             type="button"
                             className="btn btn-primary"
-                            onClick={handleUpdatesubService}
+                            onClick={handleUpdateseoDetail}
                           >
                             Update
                           </button>
@@ -409,7 +330,6 @@ function ManageSubService() {
               </div>
             </div>
           </div>
-
           <Footer />
         </div>
       </div>
@@ -417,4 +337,4 @@ function ManageSubService() {
   );
 }
 
-export default ManageSubService;
+export default ManageSeo;

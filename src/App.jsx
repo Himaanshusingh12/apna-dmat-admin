@@ -28,6 +28,8 @@ import AddSlider from "./Pages/AddSlider";
 import ManageSlider from "./Pages/ManageSlider";
 import AdminLogin from "./Pages/AdminLogin";
 import ProtectedRoute from "./routes/protectedRoute";
+import AddSeo from "./Pages/AddSeo";
+import ManageSeo from "./Pages/ManageSeo";
 
 function App() {
   return (
@@ -234,6 +236,22 @@ function App() {
               element={
                 <>
                   <ManageSlider />
+                </>
+              }
+            ></Route>
+            <Route
+              path="/add-seo"
+              element={
+                <>
+                  <AddSeo />
+                </>
+              }
+            ></Route>
+            <Route
+              path="/manage-seo"
+              element={
+                <>
+                  <ManageSeo />
                 </>
               }
             ></Route>

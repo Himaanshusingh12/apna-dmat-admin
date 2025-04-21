@@ -120,6 +120,16 @@
     }
 }
 
+/* new sidebar css */
+/* Reduce spacing between sidebar nav items */
+.sidebar .nav-link {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    margin-bottom: 2px;
+    font-size: 15px;
+  }
+  
+
 
 /*** Navbar ***/
 .sidebar .navbar .navbar-nav .nav-link {

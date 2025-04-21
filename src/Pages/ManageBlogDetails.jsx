@@ -311,7 +311,7 @@ function ManageBlogDetails() {
                       </tr>
                     )}
                   </tbody>
-                  {/*Edit Service Modal */}
+                  {/*Edit blogdetials Modal */}
                   <div
                     className="modal fade"
                     id="editServiceModal"

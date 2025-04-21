@@ -5,6 +5,7 @@ import Footer from "../Component/Footer";
 import axios from "axios";
 import { BACKEND_URL } from "../Constant";
 import { toast } from "react-toastify";
+import JoditEditor from "jodit-react";
 
 function ManagePrivacyPolicy() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -43,6 +44,12 @@ function ManagePrivacyPolicy() {
         }`
       );
     }
+  };
+
+  const stripHtml = (html) => {
+    const div = document.createElement("div");
+    div.innerHTML = html;
+    return div.textContent || div.innerText || "";
   };
 
   // Handle Page Change
@@ -173,8 +180,17 @@ function ManagePrivacyPolicy() {
                           className="table-light"
                         >
                           <th>{index + 1}</th>
-                          <td className="border text-muted">
+                          {/* <td className="border text-muted">
                             {privacypolicy.content}
+                          </td> */}
+                          <td
+                            className="border text-muted"
+                            title={stripHtml(privacypolicy.content)}
+                          >
+                            {stripHtml(privacypolicy.content).length > 100
+                              ? stripHtml(privacypolicy.content).slice(0, 100) +
+                                "..."
+                              : stripHtml(privacypolicy.content)}
                           </td>
                           <td className="border">
                             <span
@@ -248,7 +264,7 @@ function ManagePrivacyPolicy() {
                     tabIndex="-1"
                     aria-hidden="true"
                   >
-                    <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-dialog modal-fullscreen">
                       <div className="modal-content">
                         <div className="modal-header bg-primary text-white">
                           <h5 className="modal-title">Edit Privacy & Policy</h5>
@@ -262,7 +278,7 @@ function ManagePrivacyPolicy() {
                         <div className="modal-body bg-primary text-white">
                           <div className="mb-3">
                             <label className="form-label">Content</label>
-                            <textarea
+                            {/* <textarea
                               className="form-control"
                               value={selectedPrivacy?.content || ""}
                               onChange={(e) =>
@@ -271,7 +287,16 @@ function ManagePrivacyPolicy() {
                                   content: e.target.value,
                                 })
                               }
-                            ></textarea>
+                            ></textarea> */}
+                            <JoditEditor
+                              value={selectedPrivacy?.content || ""}
+                              onChange={(newContent) =>
+                                setSelectedPrivacy({
+                                  ...selectedPrivacy,
+                                  content: newContent,
+                                })
+                              }
+                            />
                           </div>
                         </div>
                         <div className="modal-footer">

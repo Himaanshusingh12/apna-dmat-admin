@@ -105,10 +105,6 @@ function ManageTestimonial() {
       toast.success("Testimonial status updated successfully!");
       fetchTestimonial();
     } catch (error) {
-      console.error(
-        "Error updating status:",
-        error.response?.data || error.message
-      );
       toast.error(
         `Error updating status: ${
           error.response?.data?.message || error.message

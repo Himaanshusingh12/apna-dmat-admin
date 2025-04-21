@@ -114,27 +114,6 @@ function ManageBlogCategory() {
     }
   };
 
-  // // Handle Blog category Update
-  // const handleUpdatecategory = async () => {
-  //   if (!selectedCategory) return;
-
-  //   try {
-  //     await axios.put(
-  //       `${BACKEND_URL}/api/blog-category/edit/${selectedCategory.blog_id}`,
-  //       {
-  //         category: selectedCategory.category,
-  //       }
-  //     );
-
-  //     toast.success("Blog category updated successfully!");
-  //     fetchBlogcategory();
-  //     setSelectedCategory(null);
-  //   } catch (error) {
-  //     toast.error("Error updating blog category");
-  //   }
-  // };
-
-  // new one
   // Handle Image Change
   const handleImageChange = (e) => {
     setImageFile(e.target.files[0]);
@@ -147,6 +126,13 @@ function ManageBlogCategory() {
     try {
       const formData = new FormData();
       formData.append("category", selectedCategory.category);
+      formData.append("slug", selectedCategory.slug);
+      formData.append("meta_title", selectedCategory.meta_title || "");
+      formData.append(
+        "meta_description",
+        selectedCategory.meta_description || ""
+      );
+      formData.append("meta_keywords", selectedCategory.meta_keywords || "");
       if (imageFile) {
         formData.append("image", imageFile);
       }
@@ -197,6 +183,10 @@ function ManageBlogCategory() {
                       </th>
                       <th scope="col">Categories</th>
                       <th scope="col">Image</th>
+                      <th scope="col">Slug</th>
+                      <th scope="col">Mega Title</th>
+                      <th scope="col">Meta Description</th>
+                      <th scope="col">Meta Keywords</th>
                       <th scope="col">Status</th>
                       <th scope="col">Action</th>
                     </tr>
@@ -217,6 +207,16 @@ function ManageBlogCategory() {
                                 borderRadius: "5px",
                               }}
                             />
+                          </td>
+                          <td className="border text-muted">{blog.slug}</td>
+                          <td className="border text-muted">
+                            {blog.meta_title}
+                          </td>
+                          <td className="border text-muted">
+                            {blog.meta_description}
+                          </td>
+                          <td className="border text-muted">
+                            {blog.meta_keywords}
                           </td>
                           <td className="border">
                             <span
@@ -319,6 +319,64 @@ function ManageBlogCategory() {
                               className="form-control"
                               onChange={handleImageChange}
                             />
+                          </div>
+                          <div className="mb-3">
+                            <label className="form-label">Slug</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={selectedCategory?.slug || ""}
+                              onChange={(e) =>
+                                setSelectedCategory({
+                                  ...selectedCategory,
+                                  slug: e.target.value,
+                                })
+                              }
+                            />
+                          </div>
+                          <div className="mb-3">
+                            <label className="form-label">Meta Title</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={selectedCategory?.meta_title || ""}
+                              onChange={(e) =>
+                                setSelectedCategory({
+                                  ...selectedCategory,
+                                  meta_title: e.target.value,
+                                })
+                              }
+                            />
+                          </div>
+                          <div className="mb-3">
+                            <label className="form-label">
+                              Meta Description
+                            </label>
+                            <textarea
+                              type="text"
+                              className="form-control"
+                              value={selectedCategory?.meta_description || ""}
+                              onChange={(e) =>
+                                setSelectedCategory({
+                                  ...selectedCategory,
+                                  meta_description: e.target.value,
+                                })
+                              }
+                            ></textarea>
+                          </div>
+                          <div className="mb-3">
+                            <label className="form-label">Meta Keywords</label>
+                            <textarea
+                              type="text"
+                              className="form-control"
+                              value={selectedCategory?.meta_keywords || ""}
+                              onChange={(e) =>
+                                setSelectedCategory({
+                                  ...selectedCategory,
+                                  meta_keywords: e.target.value,
+                                })
+                              }
+                            ></textarea>
                           </div>
                         </div>
                         <div className="modal-footer">

@@ -5,6 +5,7 @@ import SidePanel from "../Component/SidePanel";
 import Header from "../Component/Header";
 import Footer from "../Component/Footer";
 import { toast } from "react-toastify";
+import JoditEditor from "jodit-react";
 
 function Managetermscondition() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -43,6 +44,12 @@ function Managetermscondition() {
         }`
       );
     }
+  };
+
+  const stripHtml = (html) => {
+    const div = document.createElement("div");
+    div.innerHTML = html;
+    return div.textContent || div.innerText || "";
   };
 
   // Handle Page Change
@@ -173,8 +180,17 @@ function Managetermscondition() {
                           className="table-light"
                         >
                           <th>{index + 1}</th>
-                          <td className="border text-muted">
+                          {/* <td className="border text-muted">
                             {termcondition.content}
+                          </td> */}
+                          <td
+                            className="border text-muted"
+                            title={stripHtml(termcondition.content)}
+                          >
+                            {stripHtml(termcondition.content).length > 100
+                              ? stripHtml(termcondition.content).slice(0, 100) +
+                                "..."
+                              : stripHtml(termcondition.content)}
                           </td>
                           <td className="border">
                             <span
@@ -246,7 +262,7 @@ function Managetermscondition() {
                     tabIndex="-1"
                     aria-hidden="true"
                   >
-                    <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-dialog modal-fullscreen">
                       <div className="modal-content">
                         <div className="modal-header bg-primary text-white">
                           <h5 className="modal-title">
@@ -262,7 +278,7 @@ function Managetermscondition() {
                         <div className="modal-body bg-primary text-white">
                           <div className="mb-3">
                             <label className="form-label">Content</label>
-                            <textarea
+                            {/* <textarea
                               className="form-control"
                               value={selectedTerms?.content || ""}
                               onChange={(e) =>
@@ -271,7 +287,16 @@ function Managetermscondition() {
                                   content: e.target.value,
                                 })
                               }
-                            ></textarea>
+                            ></textarea> */}
+                            <JoditEditor
+                              value={selectedTerms?.content || ""}
+                              onChange={(newContent) =>
+                                setSelectedTerms({
+                                  ...selectedTerms,
+                                  content: newContent,
+                                })
+                              }
+                            />
                           </div>
                         </div>
                         <div className="modal-footer">

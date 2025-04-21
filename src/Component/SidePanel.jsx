@@ -6,10 +6,10 @@ function SidePanel() {
     <>
       <div className="sidebar pe-4 pb-3">
         <nav className="navbar bg-light navbar-light">
-          <NavLink to="/dashboard" className="navbar-brand mx-4 mb-3">
-            <h3 className="text-primary">Apna Dmat</h3>
+          <NavLink to="/dashboard" className="navbar-brand mx-4">
+            <h3 className="text-primary">ApnaDemat</h3>
           </NavLink>
-          <div className="d-flex align-items-center ms-4 mb-4">
+          <div className="d-flex align-items-center ms-4 mb-1">
             <div className="position-relative">
               <img
                 className="rounded-circle"
@@ -49,7 +49,26 @@ function SidePanel() {
                 className="nav-link dropdown-toggle"
                 data-bs-toggle="dropdown"
               >
-                <i className="fa fa-cog me-2" />
+                <i class="fas fa-cogs"></i>
+                Manage Seo
+              </a>
+              <div className="dropdown-menu bg-transparent border-0">
+                <NavLink to="/add-seo" className="dropdown-item">
+                  Add
+                </NavLink>
+                <NavLink to="/manage-seo" className="dropdown-item">
+                  Manage
+                </NavLink>
+              </div>
+            </div>
+            <div className="nav-item dropdown">
+              <a
+                href="#"
+                className="nav-link dropdown-toggle"
+                data-bs-toggle="dropdown"
+              >
+                {/* <i className="fa fa-cog me-2" /> */}
+                <i className="fa fa-concierge-bell me-2" />
                 Service
               </a>
               <div className="dropdown-menu bg-transparent border-0">
@@ -67,7 +86,8 @@ function SidePanel() {
                 className="nav-link dropdown-toggle"
                 data-bs-toggle="dropdown"
               >
-                <i className="fa fa-cog me-2" />
+                {/* <i className="fa fa-cog me-2" /> */}
+                <i className="fa fa-layer-group me-2" />
                 Sub Service
               </a>
               <div className="dropdown-menu bg-transparent border-0">
@@ -85,7 +105,8 @@ function SidePanel() {
                 className="nav-link dropdown-toggle"
                 data-bs-toggle="dropdown"
               >
-                <i className="fa fa-cog me-2" />
+                {/* <i className="fa fa-cog me-2" /> */}
+                <i className="fa fa-file-alt me-2" />
                 Service Details
               </a>
               <div className="dropdown-menu bg-transparent border-0">

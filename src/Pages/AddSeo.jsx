@@ -6,17 +6,16 @@ import axios from "axios";
 import { BACKEND_URL } from "../Constant";
 import { toast } from "react-toastify";
 
-function AddService() {
+function AddSeo() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  // section for add seo detail
   const [formData, setFormData] = useState({
-    icon: "",
-    title: "",
-    description: "",
+    page_name: "",
     meta_title: "",
     meta_description: "",
     meta_keywords: "",
@@ -30,35 +29,22 @@ function AddService() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.icon === "") {
-      toast.error("Icon field is required");
-      return;
-    }
-
-    if (formData.title === "") {
-      toast.error("Title field is required");
-      return;
-    }
-
-    if (formData.description === "") {
-      toast.error("Description field is required");
+    if (formData.page_name === "") {
+      toast.error("Please select page");
       return;
     }
 
     try {
-      await axios.post(`${BACKEND_URL}/api/service/add-service`, formData);
-      toast.success("Service added successfully");
+      await axios.post(`${BACKEND_URL}/api/seo/add`, formData);
+      toast.success("Seo detail added successfully");
       setFormData({
-        icon: "",
-        title: "",
-        description: "",
+        page_name: "",
         meta_title: "",
         meta_description: "",
         meta_keywords: "",
       });
     } catch (err) {
-      toast.error("Error Adding Service");
-      // console.error(err);
+      toast.error("Error Adding Seo Detail");
     }
   };
   return (
@@ -71,49 +57,24 @@ function AddService() {
             <div className="row g-4">
               <div className="col-sm-12 col-xl-6">
                 <div className="bg-light rounded h-100 p-4">
-                  <h6 className="mb-4">Add Service</h6>
+                  <h6 className="mb-4">Add Seo Detail</h6>
                   <form onSubmit={handleSubmit}>
-                    {/* Icon Field */}
                     <div className="form-floating mb-3">
-                      <input
-                        type="text"
+                      <select
                         className="form-control"
-                        id="icon"
-                        name="icon"
-                        value={formData.icon}
+                        id="page_name"
+                        name="page_name"
+                        value={formData.page_name}
                         onChange={handleChange}
-                        placeholder="Enter icon"
-                      />
-                      <label htmlFor="icon">Icon</label>
+                      >
+                        <option value="">Select Page</option>
+                        <option value="home">Home</option>
+                        <option value="about">About</option>
+                        <option value="contact">Contact</option>
+                      </select>
+                      <label htmlFor="page_name">Select Page</label>
                     </div>
-
-                    {/* Title Field */}
-                    <div className="form-floating mb-3">
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="title"
-                        name="title"
-                        value={formData.title}
-                        onChange={handleChange}
-                        placeholder="Enter title"
-                      />
-                      <label htmlFor="title">Title</label>
-                    </div>
-
-                    {/* Description Field */}
-                    <div className="form-floating mb-3">
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="description"
-                        name="description"
-                        value={formData.description}
-                        onChange={handleChange}
-                        placeholder="Enter description"
-                      />
-                      <label htmlFor="description">Description</label>
-                    </div>
+                    {/* Meta title Field */}
                     <div className="form-floating mb-3">
                       <input
                         type="text"
@@ -122,43 +83,47 @@ function AddService() {
                         name="meta_title"
                         value={formData.meta_title}
                         onChange={handleChange}
-                        placeholder="Enter Meta Title"
+                        placeholder="Enter meta title"
                       />
-                      <label htmlFor="meta_title">Meta Title</label>
+                      <label htmlFor="icon">Meta Title</label>
                     </div>
+
+                    {/* meta description Field */}
                     <div className="form-floating mb-3">
-                      <textarea
+                      <input
                         type="text"
                         className="form-control"
                         id="meta_description"
                         name="meta_description"
                         value={formData.meta_description}
                         onChange={handleChange}
-                        placeholder="Enter Meta Description"
-                      ></textarea>
-                      <label htmlFor="meta_description">Meta Description</label>
+                        placeholder="Enter meta description"
+                      />
+                      <label htmlFor="title">Meta Description</label>
                     </div>
+
+                    {/* Meta keywords Field */}
                     <div className="form-floating mb-3">
-                      <textarea
+                      <input
                         type="text"
                         className="form-control"
                         id="meta_keywords"
                         name="meta_keywords"
                         value={formData.meta_keywords}
                         onChange={handleChange}
-                        placeholder="Enter Meta keywords"
-                      ></textarea>
-                      <label htmlFor="meta_keywords">Meta Keywords</label>
+                        placeholder="Enter meta keywords"
+                      />
+                      <label htmlFor="description">Meta keywords</label>
                     </div>
+
                     <button type="submit" className="btn btn-primary">
-                      Add Service
+                      Add Detail
                     </button>
                   </form>
                 </div>
               </div>
             </div>
           </div>
-
           <Footer />
         </div>
       </div>
@@ -166,4 +131,4 @@ function AddService() {
   );
 }
 
-export default AddService;
+export default AddSeo;
