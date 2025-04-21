@@ -71,6 +71,7 @@ function AddSeo() {
                         <option value="home">Home</option>
                         <option value="about">About</option>
                         <option value="contact">Contact</option>
+                        <option value="blog">Blogs</option>
                       </select>
                       <label htmlFor="page_name">Select Page</label>
                     </div>
