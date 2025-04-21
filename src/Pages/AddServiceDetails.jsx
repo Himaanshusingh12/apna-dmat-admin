@@ -43,6 +43,9 @@ function AddServiceDetails() {
     image: null,
     sort_description: "",
     description: "",
+    meta_title: "",
+    meta_description: "",
+    meta_keywords: "",
   });
 
   const handleChange = (e) => {
@@ -110,6 +113,9 @@ function AddServiceDetails() {
           image: null,
           sort_description: "",
           description: "",
+          meta_title: "",
+          meta_description: "",
+          meta_keywords: "",
         });
       }
     } catch (error) {
@@ -182,32 +188,6 @@ function AddServiceDetails() {
                       />
                       <label htmlFor="sort_description">Sort Description</label>
                     </div>
-                    {/* <div className="mb-3">
-                      <label className="form-label">Sort Description</label>
-                      <JoditEditor
-                        value={formData.sort_description}
-                        onChange={(newContent) =>
-                          setFormData({
-                            ...formData,
-                            sort_description: newContent,
-                          })
-                        }
-                      />
-                    </div> */}
-
-                    {/* Description Field */}
-                    {/* <div className="form-floating mb-3">
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="description"
-                        name="description"
-                        value={formData.description}
-                        onChange={handleChange}
-                        placeholder="Enter description"
-                      />
-                      <label htmlFor="description">Description</label>
-                    </div> */}
                     <div className="mb-3">
                       <label className="form-label">Description</label>
                       <JoditEditor
@@ -216,6 +196,44 @@ function AddServiceDetails() {
                           setFormData({ ...formData, description: newContent })
                         }
                       />
+                    </div>
+                    <div className="form-floating mb-3">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="meta_title"
+                        name="meta_title"
+                        value={formData.meta_title}
+                        onChange={handleChange}
+                        placeholder="Enter Meta Title"
+                      />
+                      <label htmlFor="meta_title">Meta Title</label>
+                    </div>
+
+                    <div className="form-floating mb-3">
+                      <textarea
+                        className="form-control"
+                        id="meta_description"
+                        name="meta_description"
+                        value={formData.meta_description}
+                        onChange={handleChange}
+                        placeholder="Enter Meta Description"
+                        style={{ height: "100px" }}
+                      ></textarea>
+                      <label htmlFor="meta_description">Meta Description</label>
+                    </div>
+
+                    <div className="form-floating mb-3">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="meta_keywords"
+                        name="meta_keywords"
+                        value={formData.meta_keywords}
+                        onChange={handleChange}
+                        placeholder="Enter Meta Keywords"
+                      />
+                      <label htmlFor="meta_keywords">Meta Keywords</label>
                     </div>
 
                     <button type="submit" className="btn btn-primary">

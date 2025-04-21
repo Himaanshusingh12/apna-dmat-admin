@@ -135,6 +135,10 @@ function ManageServiceDetails() {
       const formData = new FormData();
       formData.append("sort_description", selecteddetail.sort_description);
       formData.append("description", selecteddetail.description);
+      formData.append("meta_title", selecteddetail.meta_title);
+      formData.append("meta_description", selecteddetail.meta_description);
+      formData.append("meta_keywords", selecteddetail.meta_keywords);
+
       if (imageFile) {
         // console.log("Image File:", imageFile);
         formData.append("image", imageFile);
@@ -184,10 +188,10 @@ function ManageServiceDetails() {
                       <th>Sub Service</th>
                       <th scope="col">image</th>
                       <th scope="col">Sort Description</th>
-                      {/* <th scope="col" className="w-100">
-                        Description
-                      </th> */}
                       <th scope="col">Description</th>
+                      <th scope="col">Meta Title</th>
+                      <th scope="col">Meta Description</th>
+                      <th scope="col">Meta Keywords</th>
                       <th scope="col">Status</th>
                       <th scope="col">Action</th>
                     </tr>
@@ -227,6 +231,15 @@ function ManageServiceDetails() {
                                   100
                                 ) + "..."
                               : stripHtml(servicedetail.description)}
+                          </td>
+                          <td className="border fw-bold text-secondary">
+                            {servicedetail.meta_title}
+                          </td>
+                          <td className="border fw-bold text-secondary">
+                            {servicedetail.meta_description}
+                          </td>
+                          <td className="border fw-bold text-secondary">
+                            {servicedetail.meta_keywords}
                           </td>
 
                           <td className="border text-center">
@@ -344,6 +357,47 @@ function ManageServiceDetails() {
                                 setSelectedDetail({
                                   ...selecteddetail,
                                   description: newContent,
+                                })
+                              }
+                            />
+                          </div>
+                          <div className="mb-3">
+                            <label className="form-label">Meta Title</label>
+                            <input
+                              className="form-control"
+                              value={selecteddetail?.meta_title || ""}
+                              onChange={(e) =>
+                                setSelectedDetail({
+                                  ...selecteddetail,
+                                  meta_title: e.target.value,
+                                })
+                              }
+                            />
+                          </div>
+                          <div className="mb-3">
+                            <label className="form-label">
+                              Meta Discription
+                            </label>
+                            <textarea
+                              className="form-control"
+                              value={selecteddetail?.meta_description || ""}
+                              onChange={(e) =>
+                                setSelectedDetail({
+                                  ...selecteddetail,
+                                  meta_description: e.target.value,
+                                })
+                              }
+                            />
+                          </div>
+                          <div className="mb-3">
+                            <label className="form-label">Meta Keywords</label>
+                            <input
+                              className="form-control"
+                              value={selecteddetail?.meta_keywords || ""}
+                              onChange={(e) =>
+                                setSelectedDetail({
+                                  ...selecteddetail,
+                                  meta_keywords: e.target.value,
                                 })
                               }
                             />
