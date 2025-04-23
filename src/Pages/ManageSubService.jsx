@@ -126,9 +126,6 @@ function ManageSubService() {
           icon: selectedsubService.icon,
           title: selectedsubService.title,
           description: selectedsubService.description,
-          meta_title: selectedsubService.meta_title,
-          meta_description: selectedsubService.meta_description,
-          meta_keywords: selectedsubService.meta_keywords,
         }
       );
 
@@ -191,15 +188,6 @@ function ManageSubService() {
                           </td>
                           <td className="border text-muted">
                             {subservice.description}
-                          </td>
-                          <td className="border text-muted">
-                            {subservice.meta_title}
-                          </td>
-                          <td className="border text-muted">
-                            {subservice.meta_description}
-                          </td>
-                          <td className="border text-muted">
-                            {subservice.meta_keywords}
                           </td>
                           <td className="border">
                             <span
@@ -324,47 +312,6 @@ function ManageSubService() {
                                 })
                               }
                             ></textarea>
-                          </div>
-                          <div className="mb-3">
-                            <label className="form-label">Meta Title</label>
-                            <input
-                              className="form-control"
-                              value={selectedsubService?.meta_title || ""}
-                              onChange={(e) =>
-                                setSelectedsubService({
-                                  ...selectedsubService,
-                                  meta_title: e.target.value,
-                                })
-                              }
-                            />
-                          </div>
-                          <div className="mb-3">
-                            <label className="form-label">
-                              Meta Description
-                            </label>
-                            <textarea
-                              className="form-control"
-                              value={selectedsubService?.meta_description || ""}
-                              onChange={(e) =>
-                                setSelectedsubService({
-                                  ...selectedsubService,
-                                  meta_description: e.target.value,
-                                })
-                              }
-                            ></textarea>
-                          </div>
-                          <div className="mb-3">
-                            <label className="form-label">Meta Keywords</label>
-                            <input
-                              className="form-control"
-                              value={selectedsubService?.meta_keywords || ""}
-                              onChange={(e) =>
-                                setSelectedsubService({
-                                  ...selectedsubService,
-                                  meta_keywords: e.target.value,
-                                })
-                              }
-                            />
                           </div>
                         </div>
                         <div className="modal-footer">

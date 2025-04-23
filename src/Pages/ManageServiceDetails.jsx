@@ -218,9 +218,19 @@ function ManageServiceDetails() {
                               }}
                             />
                           </td>
-                          <td className="border fw-bold text-secondary">
-                            {servicedetail.sort_description}
+                          <td
+                            className="border fw-bold text-secondary"
+                            title={stripHtml(servicedetail.sort_description)}
+                          >
+                            {stripHtml(servicedetail.sort_description).length >
+                            100
+                              ? stripHtml(servicedetail.sort_description).slice(
+                                  0,
+                                  100
+                                ) + "..."
+                              : stripHtml(servicedetail.sort_description)}
                           </td>
+
                           <td
                             className="border text-muted"
                             title={stripHtml(servicedetail.description)}

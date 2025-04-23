@@ -43,9 +43,6 @@ function AddSubService() {
     icon: "",
     title: "",
     description: "",
-    meta_title: "",
-    meta_description: "",
-    meta_keywords: "",
   });
 
   const handleChange = (e) => {
@@ -87,9 +84,6 @@ function AddSubService() {
         icon: "",
         title: "",
         description: "",
-        meta_title: "",
-        meta_description: "",
-        meta_keywords: "",
       });
     } catch (err) {
       toast.success("Error Adding Service");
@@ -173,43 +167,6 @@ function AddSubService() {
                       />
                       <label htmlFor="description">Description</label>
                     </div>
-                    <div className="form-floating mb-3">
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="meta_title"
-                        name="meta_title"
-                        value={formData.meta_title}
-                        onChange={handleChange}
-                        placeholder="Enter Meta Title"
-                      />
-                      <label htmlFor="meta_title">Meta Title</label>
-                    </div>
-                    <div className="form-floating mb-3">
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="meta_description"
-                        name="meta_description"
-                        value={formData.meta_description}
-                        onChange={handleChange}
-                        placeholder="Enter Meta Description"
-                      />
-                      <label htmlFor="meta_description">Meta Description</label>
-                    </div>
-                    <div className="form-floating mb-3">
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="meta_keywords"
-                        name="meta_keywords"
-                        value={formData.meta_keywords}
-                        onChange={handleChange}
-                        placeholder="Enter Meta Keywords"
-                      />
-                      <label htmlFor="meta_keywords">Meta Keywords</label>
-                    </div>
-
                     <button type="submit" className="btn btn-primary">
                       Add Service
                     </button>
