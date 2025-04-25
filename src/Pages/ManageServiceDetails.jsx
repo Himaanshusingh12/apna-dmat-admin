@@ -386,7 +386,7 @@ function ManageServiceDetails() {
                           </div>
                           <div className="mb-3">
                             <label className="form-label">
-                              Meta Discription
+                              Meta Description
                             </label>
                             <textarea
                               className="form-control"

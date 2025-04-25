@@ -92,8 +92,10 @@ function ManageSlider() {
                       <th scope="col" className="text-center">
                         S. No.
                       </th>
-                      <th scope="col">image one</th>
-                      <th scope="col">image two</th>
+                      <th scope="col">image One</th>
+                      <th scope="col">image Two</th>
+                      <th scope="col">image Three</th>
+                      <th scope="col">image Four</th>
                       <th scope="col">Status</th>
                       <th scope="col">Action</th>
                     </tr>
@@ -118,6 +120,28 @@ function ManageSlider() {
                           <td className="border text-muted">
                             <img
                               src={slider.image2}
+                              alt="Blog"
+                              style={{
+                                width: "100px",
+                                height: "auto",
+                                borderRadius: "5px",
+                              }}
+                            />
+                          </td>
+                          <td className="border text-muted">
+                            <img
+                              src={slider.image3}
+                              alt="Blog"
+                              style={{
+                                width: "100px",
+                                height: "auto",
+                                borderRadius: "5px",
+                              }}
+                            />
+                          </td>
+                          <td className="border text-muted">
+                            <img
+                              src={slider.image4}
                               alt="Blog"
                               style={{
                                 width: "100px",

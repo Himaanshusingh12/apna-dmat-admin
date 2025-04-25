@@ -16,6 +16,8 @@ function AddSlider() {
   // section for add service details
   const [image, setImage] = useState(null);
   const [image2, setImage2] = useState(null);
+  const [image3, setImage3] = useState(null);
+  const [image4, setImage4] = useState(null);
 
   const handleFileChange = (e, setImage) => {
     setImage(e.target.files[0]);
@@ -24,14 +26,16 @@ function AddSlider() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!image || !image2) {
-      toast.error("Both image fields are required");
+    if (!image || !image2 || !image3 || !image4) {
+      toast.error("All image fields are required");
       return;
     }
 
     const formData = new FormData();
     formData.append("image", image);
     formData.append("image2", image2);
+    formData.append("image3", image3);
+    formData.append("image4", image4);
 
     try {
       const response = await axios.post(
@@ -48,6 +52,8 @@ function AddSlider() {
         toast.success("Images Uploaded Successfully!");
         setImage(null);
         setImage2(null);
+        setImage3(null);
+        setImage4(null);
       }
     } catch (error) {
       toast.error("Failed to upload images. Please try again.");
@@ -89,6 +95,28 @@ function AddSlider() {
                         onChange={(e) => handleFileChange(e, setImage2)}
                       />
                       <label htmlFor="image2">Upload second image</label>
+                    </div>
+
+                    <div className="form-floating mb-3">
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="image3"
+                        name="image3"
+                        onChange={(e) => handleFileChange(e, setImage3)}
+                      />
+                      <label htmlFor="image3">Upload third image</label>
+                    </div>
+
+                    <div className="form-floating mb-3">
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="image4"
+                        name="image4"
+                        onChange={(e) => handleFileChange(e, setImage4)}
+                      />
+                      <label htmlFor="image4">Upload fourth image</label>
                     </div>
                     <button type="submit" className="btn btn-primary">
                       upload image
