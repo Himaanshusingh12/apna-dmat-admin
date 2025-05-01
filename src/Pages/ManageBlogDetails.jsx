@@ -171,7 +171,7 @@ function ManageBlogDetails() {
                 <input
                   type="text"
                   className="form-control w-25 border-primary shadow-sm"
-                  placeholder="Search Subservice..."
+                  placeholder="Search Category..."
                   value={searchQuery}
                   onChange={handleSearch}
                 />
@@ -219,7 +219,6 @@ function ManageBlogDetails() {
                           <td className="border text-muted">
                             {blogdetail.title}
                           </td>
-
                           <td
                             className="border text-muted"
                             title={stripHtml(blogdetail.description)}

@@ -36,8 +36,8 @@ function AccountSetting() {
         const response = await axios.get(
           `${BACKEND_URL}/api/account-settings/get-setting`
         );
-        if (response.status === 200) {
-          setFormData(response.data.data);
+        if (response.status === 200 && response.data.data.length > 0) {
+          setFormData(response.data.data[0]);
         }
       } catch (error) {
         // console.error("Error fetching settings:", error);
