@@ -51,7 +51,7 @@ function AdminLogin() {
           >
             <div className="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
               <div className="bg-light rounded p-4 p-sm-5 my-4 mx-3">
-                <h3 className="text-success">Apna Dmat</h3>
+                <h3 className="text-success">ApnaDemat</h3>
                 <h3>Sign In</h3>
                 <form onSubmit={handleSubmit}>
                   <div className="form-floating mb-3">
