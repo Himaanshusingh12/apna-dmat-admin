@@ -122,9 +122,8 @@ function Users() {
                         S. No.
                       </th>
                       <th scope="col">Name</th>
-                      <th scope="col">Email</th>
                       <th scope="col">Phone</th>
-                      <th scope="col">Subject</th>
+                      <th scope="col">Services</th>
                       <th scope="col">Message</th>
                       <th scope="col">Status</th>
                       <th scope="col">Action</th>
@@ -136,9 +135,11 @@ function Users() {
                         <tr key={user.customer_id} className="table-light">
                           <th>{index + 1}</th>
                           <td className="border text-muted">{user.name}</td>
-                          <td className="border text-muted">{user.email}</td>
                           <td className="border text-muted">{user.phone}</td>
-                          <td className="border text-muted">{user.subject}</td>
+                          <td className="border text-muted">
+                            {JSON.parse(user.services).join(", ")}
+                          </td>
+
                           <td className="border text-muted">{user.message}</td>
                           <td className="border">
                             {/* {user.status} */}

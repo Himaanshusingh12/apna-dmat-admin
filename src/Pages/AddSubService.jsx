@@ -40,7 +40,7 @@ function AddSubService() {
   // section for add new subservice
   const [formData, setFormData] = useState({
     service_id: "",
-    icon: "",
+    image: null,
     title: "",
     description: "",
   });
@@ -48,6 +48,11 @@ function AddSubService() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleFileChange = (e) => {
+    const { name, files } = e.target;
+    setFormData({ ...formData, [name]: files[0] });
   };
 
   const handleSubmit = async (e) => {
@@ -58,8 +63,8 @@ function AddSubService() {
       return;
     }
 
-    if (formData.icon === "") {
-      toast.error("Icon field is required");
+    if (!formData.image) {
+      toast.error("Image field is required");
       return;
     }
 
@@ -73,20 +78,39 @@ function AddSubService() {
       return;
     }
 
+    const formDataToSend = new FormData();
+
+    // Append files if selected
+    if (formData.image) {
+      formDataToSend.append("image", formData.image);
+    }
+
+    // Append text fields
+    Object.keys(formData).forEach((key) => {
+      if (key !== "image") {
+        formDataToSend.append(key, formData[key]);
+      }
+    });
+
     try {
       await axios.post(
         `${BACKEND_URL}/api/subservice/add-subservice`,
-        formData
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
       toast.success("Service added successfully");
       setFormData({
         service_id: "",
-        icon: "",
+        image: null,
         title: "",
         description: "",
       });
     } catch (err) {
-      toast.success("Error Adding Service");
+      toast.error("Error Adding Service");
     }
   };
 
@@ -126,18 +150,17 @@ function AddSubService() {
                       </select>
                       <label htmlFor="service_id">Select Service</label>
                     </div>
-                    {/* Icon Field */}
+                    {/* Image Field */}
                     <div className="form-floating mb-3">
                       <input
-                        type="text"
+                        type="file"
                         className="form-control"
-                        id="icon"
-                        name="icon"
-                        value={formData.icon}
-                        onChange={handleChange}
-                        placeholder="Enter icon"
+                        id="image"
+                        name="image"
+                        onChange={handleFileChange}
+                        placeholder="Upload image"
                       />
-                      <label htmlFor="icon">Icon</label>
+                      <label htmlFor="image">Upload image</label>
                     </div>
 
                     {/* Title Field */}

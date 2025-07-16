@@ -110,7 +110,7 @@ function ManageSeo() {
           <div className="col-12 mt-2">
             <div className="bg-white shadow rounded h-100 p-4 border">
               <div className="d-flex justify-content-between align-items-center mb-3">
-                <h5 className="fw-bold text-primary">Manage Subservice</h5>
+                <h5 className="fw-bold text-primary">Manage Seo Details</h5>
                 <input
                   type="text"
                   className="form-control w-25 border-primary shadow-sm"

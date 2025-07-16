@@ -18,6 +18,7 @@ function ManageSubService() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [selectedsubService, setSelectedsubService] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
   const limit = 10;
 
   useEffect(() => {
@@ -115,27 +116,43 @@ function ManageSubService() {
     }
   };
 
-  // Handle Service Update
+  // Handle Image Change
+  const handleImageChange = (e) => {
+    setImageFile(e.target.files[0]);
+  };
+
+  // Handle SubService Update
   const handleUpdatesubService = async () => {
     if (!selectedsubService) return;
+
+    const formDataToSend = new FormData();
+    formDataToSend.append("title", selectedsubService.title);
+    formDataToSend.append("description", selectedsubService.description);
+    formDataToSend.append("service_id", selectedsubService.service_id);
+    if (imageFile) {
+      formDataToSend.append("image", imageFile);
+    }
 
     try {
       await axios.put(
         `${BACKEND_URL}/api/subservice/edit-subservice/${selectedsubService.subservice_id}`,
+        formDataToSend,
         {
-          icon: selectedsubService.icon,
-          title: selectedsubService.title,
-          description: selectedsubService.description,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
 
       toast.success("Sub service updated successfully!");
       fetchsubService();
       setSelectedsubService(null);
+      setImageFile(null);
     } catch (error) {
-      toast.error("Error updating service");
+      toast.error("Error updating sub service");
     }
   };
+
   return (
     <>
       <div className="container-fluid position-relative bg-white d-flex p-0">
@@ -162,7 +179,7 @@ function ManageSubService() {
                   <thead className="bg-primary text-white">
                     <tr>
                       <th scope="col">S. No.</th>
-                      <th scope="col">Icon</th>
+                      <th scope="col">Image</th>
                       <th scope="col">Title</th>
                       <th scope="col">Description</th>
                       <th scope="col">Status</th>
@@ -178,7 +195,15 @@ function ManageSubService() {
                         >
                           <th>{index + 1}</th>
                           <td className="border text-muted">
-                            {subservice.icon}
+                            <img
+                              src={subservice.image}
+                              alt="Blog"
+                              style={{
+                                width: "100px",
+                                height: "auto",
+                                borderRadius: "5px",
+                              }}
+                            />
                           </td>
                           <td className="border fw-bold text-secondary">
                             {subservice.title}
@@ -270,17 +295,13 @@ function ManageSubService() {
                         </div>
                         <div className="modal-body bg-primary text-white">
                           <div className="mb-3">
-                            <label className="form-label">Icon</label>
+                            <label className="form-label">
+                              Upload New Image
+                            </label>
                             <input
-                              type="text"
+                              type="file"
                               className="form-control"
-                              value={selectedsubService?.icon || ""}
-                              onChange={(e) =>
-                                setSelectedsubService({
-                                  ...selectedsubService,
-                                  icon: e.target.value,
-                                })
-                              }
+                              onChange={handleImageChange}
                             />
                           </div>
                           <div className="mb-3">

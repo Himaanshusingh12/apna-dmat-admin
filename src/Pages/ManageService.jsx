@@ -18,6 +18,7 @@ function ManageService() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [selectedService, setSelectedService] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
   const limit = 10;
 
   useEffect(() => {
@@ -115,30 +116,44 @@ function ManageService() {
     }
   };
 
+  // Handle Image Change
+  const handleImageChange = (e) => {
+    setImageFile(e.target.files[0]);
+  };
   // Handle Service Update
   const handleUpdateService = async () => {
     if (!selectedService) return;
 
+    const formData = new FormData();
+    formData.append("title", selectedService.title);
+    formData.append("description", selectedService.description);
+    formData.append("meta_title", selectedService.meta_title);
+    formData.append("meta_description", selectedService.meta_description);
+    formData.append("meta_keywords", selectedService.meta_keywords);
+
+    if (imageFile) {
+      formData.append("image", imageFile);
+    }
+
     try {
       await axios.put(
         `${BACKEND_URL}/api/service/edit/${selectedService.service_id}`,
+        formData,
         {
-          icon: selectedService.icon,
-          title: selectedService.title,
-          description: selectedService.description,
-          meta_title: selectedService.meta_title,
-          meta_description: selectedService.meta_description,
-          meta_keywords: selectedService.meta_keywords,
+          headers: { "Content-Type": "multipart/form-data" },
         }
       );
 
       toast.success("Service updated successfully!");
       fetchService();
       setSelectedService(null);
+      setImageFile(null);
     } catch (error) {
+      console.error(error);
       toast.error("Error updating service");
     }
   };
+
   return (
     <>
       <div className="container-fluid position-relative bg-white d-flex p-0">
@@ -164,7 +179,7 @@ function ManageService() {
                       <th scope="col" className="text-center">
                         S. No.
                       </th>
-                      <th scope="col">Icon</th>
+                      <th scope="col">Image</th>
                       <th scope="col">Title</th>
                       <th scope="col">Description</th>
                       <th scope="col">Meta Title</th>
@@ -179,7 +194,17 @@ function ManageService() {
                       service.map((service, index) => (
                         <tr key={service.service_id} className="table-light">
                           <th>{index + 1}</th>
-                          <td className="border text-muted">{service.icon}</td>
+                          <td className="border text-muted">
+                            <img
+                              src={service.image}
+                              alt=""
+                              style={{
+                                width: "100px",
+                                height: "auto",
+                                borderRadius: "5px",
+                              }}
+                            />
+                          </td>
                           <td className="border fw-bold text-secondary">
                             {service.title}
                           </td>
@@ -274,17 +299,13 @@ function ManageService() {
                         </div>
                         <div className="modal-body bg-primary text-white">
                           <div className="mb-3">
-                            <label className="form-label">Icon</label>
+                            <label className="form-label">
+                              Upload New Image
+                            </label>
                             <input
-                              type="text"
+                              type="file"
                               className="form-control"
-                              value={selectedService?.icon || ""}
-                              onChange={(e) =>
-                                setSelectedService({
-                                  ...selectedService,
-                                  icon: e.target.value,
-                                })
-                              }
+                              onChange={handleImageChange}
                             />
                           </div>
                           <div className="mb-3">

@@ -16,6 +16,7 @@ function AccountSetting() {
   const [formData, setFormData] = useState({
     logo: null,
     favicon: null,
+    banner_image: null,
     email_one: "",
     email_two: "",
     address: "",
@@ -68,6 +69,9 @@ function AccountSetting() {
     }
     if (formData.favicon) {
       formDataToSend.append("favicon", formData.favicon);
+    }
+    if (formData.banner_image) {
+      formDataToSend.append("banner_image", formData.banner_image);
     }
 
     // Append text fields
@@ -142,6 +146,19 @@ function AccountSetting() {
                       <div className="col-md-6 mb-3">
                         <div className="form-floating">
                           <input
+                            type="file"
+                            className="form-control"
+                            id="banner_image"
+                            name="banner_image"
+                            onChange={handleFileChange}
+                            placeholder="Favicon"
+                          />
+                          <label htmlFor="banner_image">Banner Image</label>
+                        </div>
+                      </div>
+                      <div className="col-md-6 mb-3">
+                        <div className="form-floating">
+                          <input
                             type="email"
                             className="form-control"
                             id="email_one"
@@ -153,6 +170,7 @@ function AccountSetting() {
                           <label htmlFor="emailOne">Email One</label>
                         </div>
                       </div>
+
                       <div className="col-md-6 mb-3">
                         <div className="form-floating">
                           <input
