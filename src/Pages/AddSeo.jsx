@@ -72,6 +72,13 @@ function AddSeo() {
                         <option value="about">About</option>
                         <option value="contact">Contact</option>
                         <option value="blog">Blogs</option>
+                        <option value="services">Services</option>
+                        <option value="stock broking">Stock Broking</option>
+                        <option value="mutual funds & etf">
+                          Mutual Funds & ETF
+                        </option>
+                        <option value="insurance">Insurance</option>
+                        <option value="unlisted shares">Unlisted Shares</option>
                       </select>
                       <label htmlFor="page_name">Select Page</label>
                     </div>
