@@ -79,6 +79,20 @@ function AddSeo() {
                         </option>
                         <option value="insurance">Insurance</option>
                         <option value="unlisted shares">Unlisted Shares</option>
+                        <option value="equity">Equity</option>
+                        <option value="future & options">
+                          Future & Options
+                        </option>
+                        <option value="ipos">IPOs</option>
+                        <option value="commodity">Commodity</option>
+                        <option value="sip">SIP</option>
+                        <option value="swp">SWP</option>
+                        <option value="nfos">NFOS</option>
+                        <option value="etf">ETF</option>
+                        <option value="mediclaim">Mediclaim</option>
+                        <option value="term plan">Term Plan</option>
+                        <option value="investment plan">Investment Plan</option>
+                        <option value="motor insurace">Motor Insurance</option>
                       </select>
                       <label htmlFor="page_name">Select Page</label>
                     </div>
