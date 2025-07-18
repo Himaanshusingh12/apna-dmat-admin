@@ -30,6 +30,8 @@ import AdminLogin from "./Pages/AdminLogin";
 import ProtectedRoute from "./routes/protectedRoute";
 import AddSeo from "./Pages/AddSeo";
 import ManageSeo from "./Pages/ManageSeo";
+import AddUnlistedShares from "./Pages/AddUnlistedShares";
+import ManageUnlistedShares from "./Pages/ManageUnlistedShares";
 
 function App() {
   return (
@@ -252,6 +254,22 @@ function App() {
               element={
                 <>
                   <ManageSeo />
+                </>
+              }
+            ></Route>
+            <Route
+              path="/add-unlistedshares"
+              element={
+                <>
+                  <AddUnlistedShares />
+                </>
+              }
+            ></Route>
+            <Route
+              path="/manage-unlistedshares"
+              element={
+                <>
+                  <ManageUnlistedShares />
                 </>
               }
             ></Route>

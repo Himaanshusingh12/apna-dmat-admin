@@ -105,7 +105,6 @@ function SidePanel() {
                 className="nav-link dropdown-toggle"
                 data-bs-toggle="dropdown"
               >
-                {/* <i className="fa fa-cog me-2" /> */}
                 <i className="fa fa-file-alt me-2" />
                 Service Details
               </a>
@@ -169,6 +168,24 @@ function SidePanel() {
                 </NavLink>
                 <NavLink to="/manage-slider" className="dropdown-item">
                   Manage Slider
+                </NavLink>
+              </div>
+            </div>
+            <div className="nav-item dropdown">
+              <a
+                href="#"
+                className="nav-link dropdown-toggle"
+                data-bs-toggle="dropdown"
+              >
+                <i className="fa fa-sliders-h me-2" />
+                Unlisted Shares
+              </a>
+              <div className="dropdown-menu bg-transparent border-0">
+                <NavLink to="/add-unlistedshares" className="dropdown-item">
+                  Add Unlisted Shares
+                </NavLink>
+                <NavLink to="/manage-unlistedshares" className="dropdown-item">
+                  Manage Unlisted Shares
                 </NavLink>
               </div>
             </div>
