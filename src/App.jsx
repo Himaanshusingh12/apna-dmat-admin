@@ -8,12 +8,6 @@ import AddTestimonial from "./Pages/AddTestimonial";
 import ManageTestimonial from "./Pages/ManageTestimonial";
 import AccountSetting from "./Pages/AccountSetting";
 import ManageSetting from "./Pages/ManageSetting";
-import AddService from "./Pages/AddService";
-import ManageService from "./Pages/ManageService";
-import AddSubService from "./Pages/AddSubService";
-import ManageSubService from "./Pages/ManageSubService";
-import AddServiceDetails from "./Pages/AddServiceDetails";
-import ManageServiceDetails from "./Pages/ManageServiceDetails";
 import AboutUs from "./Pages/AboutUs";
 import TermsCondition from "./Pages/TermsCondition";
 import PrivacyPolicy from "./Pages/PrivacyPolicy";
@@ -24,14 +18,13 @@ import ManageBlogCategory from "./Pages/ManageBlogCategory";
 import AddBlogDetails from "./Pages/AddBlogDetails";
 import ManageBlogDetails from "./Pages/ManageBlogDetails";
 import PopupDetails from "./Pages/PopupDetails";
-import AddSlider from "./Pages/AddSlider";
-import ManageSlider from "./Pages/ManageSlider";
 import AdminLogin from "./Pages/AdminLogin";
 import ProtectedRoute from "./routes/protectedRoute";
 import AddSeo from "./Pages/AddSeo";
 import ManageSeo from "./Pages/ManageSeo";
 import AddUnlistedShares from "./Pages/AddUnlistedShares";
 import ManageUnlistedShares from "./Pages/ManageUnlistedShares";
+import SharesInquriy from "./Pages/SharesInquriy";
 
 function App() {
   return (
@@ -97,54 +90,7 @@ function App() {
                 </>
               }
             ></Route>
-            <Route
-              path="/add-service"
-              element={
-                <>
-                  <AddService />
-                </>
-              }
-            ></Route>
-            <Route
-              path="/manage-service"
-              element={
-                <>
-                  <ManageService />
-                </>
-              }
-            ></Route>
-            <Route
-              path="/add-subservice"
-              element={
-                <>
-                  <AddSubService />
-                </>
-              }
-            ></Route>
-            <Route
-              path="/manage-subservice"
-              element={
-                <>
-                  <ManageSubService />
-                </>
-              }
-            ></Route>
-            <Route
-              path="/add-servicedetails"
-              element={
-                <>
-                  <AddServiceDetails />
-                </>
-              }
-            ></Route>
-            <Route
-              path="/manage-servicedetails"
-              element={
-                <>
-                  <ManageServiceDetails />
-                </>
-              }
-            ></Route>
+
             <Route
               path="/about-us"
               element={
@@ -226,22 +172,6 @@ function App() {
               }
             ></Route>
             <Route
-              path="/add-slider"
-              element={
-                <>
-                  <AddSlider />
-                </>
-              }
-            ></Route>
-            <Route
-              path="/manage-slider"
-              element={
-                <>
-                  <ManageSlider />
-                </>
-              }
-            ></Route>
-            <Route
               path="/add-seo"
               element={
                 <>
@@ -270,6 +200,14 @@ function App() {
               element={
                 <>
                   <ManageUnlistedShares />
+                </>
+              }
+            ></Route>
+            <Route
+              path="/unlistedshares-inquiry"
+              element={
+                <>
+                  <SharesInquriy />
                 </>
               }
             ></Route>

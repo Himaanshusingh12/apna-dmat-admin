@@ -38,6 +38,10 @@ function SidePanel() {
               <i className="fa fa-user me-2" />
               Users
             </NavLink>
+            <NavLink to="/unlistedshares-inquiry" className="nav-item nav-link">
+              <i className="fa fa-user me-2" />
+              Shares Inquiry
+            </NavLink>
 
             <NavLink to="/account-setting" className="nav-item nav-link">
               <i className="fa fa-cog me-2" />
@@ -58,62 +62,6 @@ function SidePanel() {
                 </NavLink>
                 <NavLink to="/manage-seo" className="dropdown-item">
                   Manage
-                </NavLink>
-              </div>
-            </div>
-            <div className="nav-item dropdown">
-              <a
-                href="#"
-                className="nav-link dropdown-toggle"
-                data-bs-toggle="dropdown"
-              >
-                {/* <i className="fa fa-cog me-2" /> */}
-                <i className="fa fa-concierge-bell me-2" />
-                Service
-              </a>
-              <div className="dropdown-menu bg-transparent border-0">
-                <NavLink to="/add-service" className="dropdown-item">
-                  Add Service
-                </NavLink>
-                <NavLink to="/manage-service" className="dropdown-item">
-                  Manage Service
-                </NavLink>
-              </div>
-            </div>
-            <div className="nav-item dropdown">
-              <a
-                href="#"
-                className="nav-link dropdown-toggle"
-                data-bs-toggle="dropdown"
-              >
-                {/* <i className="fa fa-cog me-2" /> */}
-                <i className="fa fa-layer-group me-2" />
-                Sub Service
-              </a>
-              <div className="dropdown-menu bg-transparent border-0">
-                <NavLink to="/add-subservice" className="dropdown-item">
-                  Add Sub Service
-                </NavLink>
-                <NavLink to="/manage-subservice" className="dropdown-item">
-                  Manage Sub Service
-                </NavLink>
-              </div>
-            </div>
-            <div className="nav-item dropdown">
-              <a
-                href="#"
-                className="nav-link dropdown-toggle"
-                data-bs-toggle="dropdown"
-              >
-                <i className="fa fa-file-alt me-2" />
-                Service Details
-              </a>
-              <div className="dropdown-menu bg-transparent border-0">
-                <NavLink to="/add-servicedetails" className="dropdown-item">
-                  Add Service Details
-                </NavLink>
-                <NavLink to="/manage-servicedetails" className="dropdown-item">
-                  Manage Service Details
                 </NavLink>
               </div>
             </div>
